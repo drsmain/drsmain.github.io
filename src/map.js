@@ -95,3 +95,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
     maxZoom: 20,
 }).addTo(map);
+
+document.getElementById('move_country').addEventListener("click", function () {
+    map.setView([36.5, 127.5], 7)
+})
