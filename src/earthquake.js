@@ -164,7 +164,7 @@ var epicenter = L.icon({
     iconUrl: './resource/epicenter.png',
     iconSize: [40, 40]
 })
-var url = 'http://apis.data.go.kr/1360000/EqkInfoService/getEqkMsg';
+var url = 'https://apis.data.go.kr/1360000/EqkInfoService/getEqkMsg';
 var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + '0hO9hpRaVBeHuTdSkSQ6hs8zwl5jvUqp4gV79zOFDdsNmmNfM5BNLORt9IwWv9YVODW9cWBK0hjzdlXzaqktUQ=='; /*Service Key*/
 queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
