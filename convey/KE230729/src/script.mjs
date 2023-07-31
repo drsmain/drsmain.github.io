@@ -81,26 +81,32 @@ function getCurrentLocation() {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
                 document.getElementById('lat').textContent =latitude
-                document.getElementById('lon').textContent =longitude
+                document.getElementById('lon').textContent =longitude;
             },
             (error) => {
                 // 위치 정보를 가져오는데 실패한 경우
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
                         console.error('사용자가 위치 정보 수집 권한을 거부했습니다.');
+                        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
+                        document.getElementById('lat').textContent ='-'
+                        document.getElementById('lon').textContent ='-'
                         break;
                     case error.POSITION_UNAVAILABLE:
                         console.error('위치 정보를 사용할 수 없습니다.');
+                        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
                         break;
                     case error.TIMEOUT:
                         console.error('위치 정보 수집이 시간 초과되었습니다.');
+                        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
                         break;
                     default:
                         console.error('알 수 없는 오류가 발생했습니다.');
+                        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
                         break;
                 }
             },
-            options // 옵션 객체 전달
+            options // 옵션 객체 전달;
         );
     } else {
         console.error('브라우저가 위치 정보 수집을 지원하지 않습니다.');
@@ -140,22 +146,26 @@ document.getElementById('white').addEventListener('click', function () {
 document.getElementById('get_location').addEventListener('click', function (event) {
     event.preventDefault(); // 폼 제출의 기본 동작 방지
     getCurrentLocation()
-    console.log(loc)
-    var dis_id = document.getElementById('id').textContent
-    console.log(dis_id)
-    var id=nowTime()+generateRandomKey();
-    var lat;
-    var lon;
-    setTimeout(function(){
-        lat = document.getElementById('lat').textContent
-        lon = document.getElementById('lon').textContent;
-        setDoc(doc(db, "past-disaster", dis_id, 'report', id), {
-            id: id,
-            location: [lat, lon],
-            felt: clicked
-        });
-    }, 100)
-    setTimeout(function() {
-        window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
-    }, 3000);
 });
+console.log(loc)
+var dis_id = document.getElementById('id').textContent
+console.log(dis_id)
+var id=nowTime()+generateRandomKey();
+var lat;
+var lon;
+setTimeout(function(){
+    lat = document.getElementById('lat').textContent
+    lon = document.getElementById('lon').textContent;
+    console.log(lat)
+    if(lat == '-' || lon == '-'){
+        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
+    }
+    setDoc(doc(db, "past-disaster", dis_id, 'report', id), {
+        id: id,
+        location: [lat, lon],
+        felt: clicked
+    });
+}, 100)
+setTimeout(function() {
+    window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
+}, 3000);
