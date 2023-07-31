@@ -243,9 +243,9 @@ function showError(error) {
 /**disasterType의 데이터를 한국어로 변환시켜줍니다.*/
 function getDisasterDescription(disasterType) {
     let disaster = '';
-
-    for (let j = 0; j < disasterType.length; j++) {
-        switch (disasterType[j]) {
+    
+    for (var i = 0; i < disasterType.length; i++) {
+        switch (disasterType[i]) {
             case 'earthquake':
                 disaster += '지진, ';
                 break;
@@ -455,9 +455,9 @@ document.getElementById('submit').addEventListener('click', function (event) {
             return;
         }
         loc.push([document.getElementById('input_lat').value, document.getElementById('input_lon').value])
-        var ok = confirm(`  입력하신 정보가 확실합니까?
-        > ${getDisasterDescription(selectedOptions)} | ${getSituationDescription(document.getElementById('situation_type').value)}
-        > ${document.getElementById('explain').value}`)
+        var ok = confirm(`입력하신 정보가 확실합니까?
+> ${getDisasterDescription(selectedOptions)} | ${getSituationDescription(document.getElementById('situation_type').value)}
+> ${document.getElementById('explain').value}`)
         if (ok) {
             //서버 전송
             var id=nowTime()+generateRandomKey()
@@ -501,6 +501,7 @@ function onMarkerClick(e) {
     document.getElementById('see_report_title').textContent = `${data.name}님의 보고`;
     document.getElementById('report_time').textContent = timestampToDateTime((data.pressTime).seconds)
     document.getElementById('disaster').textContent = getDisasterDescription(data.disasterType)
+    console.log(data.disasterType);
     document.getElementById('disaster_asdf').textContent = ' 보고됨';
     document.getElementById('situation').textContent = getSituationDescription(data.situationType);
     document.getElementById('comment').textContent = data.comment;
@@ -509,74 +510,83 @@ function onMarkerClick(e) {
     localStorage.setItem('report_id', data.id)
 }
 const reportMarker = L.layerGroup().addTo(map);
-const querySnapshot = await getDocs(collection(db, "report"));
+// const querySnapshot = await getDocs(collection(db, "report"));
 const data_list = []
+const querySnapshot = await getDocs(collection(db, "report"));
 querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, " => ", doc.data());
     var data = doc.data()
     data_list.push(data)
-
-    if (data.situationType == 'occur') {
-        var marker = L.marker(data.location, { icon: red }).addTo(map);
-    } else if (data.situationType == 'occur_bf') {
-        var marker = L.marker(data.location, { icon: orange }).addTo(map);
-    } else if (data.situationType == 'danger') {
-        var marker = L.marker(data.location, { icon: yellow }).addTo(map);
-    } else if (data.situationType == 'difference') {
-        var marker = L.marker(data.location, { icon: gray }).addTo(map);
-    } else if (data.situationType == 'usual') {
-        var marker = L.marker(data.location, { icon: white }).addTo(map);
-    }
-    reportMarker.addLayer(marker)
-    if ((data.disasterType).length == 1) {
-        if (data.disasterType == 'earthquake') {
-            marker = L.marker(data.location, { icon: earthquake }).addTo(map);
-        } else if (data.disasterType == 'heavyrain') {
-            marker = L.marker(data.location, { icon: heavyrain }).addTo(map);
-        } else if (data.disasterType == 'lightning') {
-            marker = L.marker(data.location, { icon: lightning }).addTo(map);
-        } else if (data.disasterType == 'landslide') {
-            marker = L.marker(data.location, { icon: landslide }).addTo(map);
-        } else if (data.disasterType == 'flood') {
-            marker = L.marker(data.location, { icon: flood }).addTo(map);
-        } else if (data.disasterType == 'fire') {
-            marker = L.marker(data.location, { icon: fire }).addTo(map);
-        } else if (data.disasterType == 'hot') {
-            marker = L.marker(data.location, { icon: hot }).addTo(map);
-        } else if (data.disasterType == 'cold') {
-            marker = L.marker(data.location, { icon: cold }).addTo(map);
-        } else if (data.disasterType == 'heavysnow') {
-            marker = L.marker(data.location, { icon: heavysnow }).addTo(map);
-        } else if (data.disasterType == 'wind') {
-            marker = L.marker(data.location, { icon: wind }).addTo(map);
-        } else if (data.disasterType == 'tornado') {
-            marker = L.marker(data.location, { icon: tornado }).addTo(map);
-        } else if (data.disasterType == 'tsunami') {
-            marker = L.marker(data.location, { icon: tsunami }).addTo(map);
-        } else if (data.disasterType == 'surge') {
-            marker = L.marker(data.location, { icon: surge }).addTo(map);
-        } else if (data.disasterType == 'pollution') {
-            marker = L.marker(data.location, { icon: pollution }).addTo(map);
-        } else if (data.disasterType == 'social') {
-            marker = L.marker(data.location, { icon: social }).addTo(map);
-        } else if (data.disasterType == 'volcano') {
-            marker = L.marker(data.location, { icon: volcano }).addTo(map);
-        } else if (data.disasterType == 'etc') {
-            marker = L.marker(data.location, { icon: etc }).addTo(map);
+});
+function pingReportMarker(){
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        var data = doc.data()
+        var marker
+        if (data.situationType == 'occur') {
+            marker = L.marker(data.location, { icon: red }).addTo(map);
+        } else if (data.situationType == 'occur_bf') {
+            marker = L.marker(data.location, { icon: orange }).addTo(map);
+        } else if (data.situationType == 'danger') {
+            marker = L.marker(data.location, { icon: yellow }).addTo(map);
+        } else if (data.situationType == 'difference') {
+            marker = L.marker(data.location, { icon: gray }).addTo(map);
+        } else if (data.situationType == 'usual') {
+            marker = L.marker(data.location, { icon: white }).addTo(map);
         }
         reportMarker.addLayer(marker)
-    } else {
-        marker = L.marker(data.location, { icon: twoPlus }).addTo(map);
-        reportMarker.addLayer(marker)
-    }
-
-    marker.data = data;
-
-    // 마커 클릭 이벤트 등록
-    marker.on('click', onMarkerClick);
-});
-// console.log(data_list)
+        if ((data.disasterType).length == 1) {
+            if (data.disasterType == 'earthquake') {
+                marker = L.marker(data.location, { icon: earthquake }).addTo(map);
+            } else if (data.disasterType == 'heavyrain') {
+                marker = L.marker(data.location, { icon: heavyrain }).addTo(map);
+            } else if (data.disasterType == 'lightning') {
+                marker = L.marker(data.location, { icon: lightning }).addTo(map);
+            } else if (data.disasterType == 'landslide') {
+                marker = L.marker(data.location, { icon: landslide }).addTo(map);
+            } else if (data.disasterType == 'flood') {
+                marker = L.marker(data.location, { icon: flood }).addTo(map);
+            } else if (data.disasterType == 'fire') {
+                marker = L.marker(data.location, { icon: fire }).addTo(map);
+            } else if (data.disasterType == 'hot') {
+                marker = L.marker(data.location, { icon: hot }).addTo(map);
+            } else if (data.disasterType == 'cold') {
+                marker = L.marker(data.location, { icon: cold }).addTo(map);
+            } else if (data.disasterType == 'heavysnow') {
+                marker = L.marker(data.location, { icon: heavysnow }).addTo(map);
+            } else if (data.disasterType == 'wind') {
+                marker = L.marker(data.location, { icon: wind }).addTo(map);
+            } else if (data.disasterType == 'tornado') {
+                marker = L.marker(data.location, { icon: tornado }).addTo(map);
+            } else if (data.disasterType == 'tsunami') {
+                marker = L.marker(data.location, { icon: tsunami }).addTo(map);
+            } else if (data.disasterType == 'surge') {
+                marker = L.marker(data.location, { icon: surge }).addTo(map);
+            } else if (data.disasterType == 'pollution') {
+                marker = L.marker(data.location, { icon: pollution }).addTo(map);
+            } else if (data.disasterType == 'social') {
+                marker = L.marker(data.location, { icon: social }).addTo(map);
+            } else if (data.disasterType == 'volcano') {
+                marker = L.marker(data.location, { icon: volcano }).addTo(map);
+            } else if (data.disasterType == 'etc') {
+                marker = L.marker(data.location, { icon: etc }).addTo(map);
+            }
+            reportMarker.addLayer(marker)
+        } else {
+            marker = L.marker(data.location, { icon: twoPlus }).addTo(map);
+            reportMarker.addLayer(marker)
+        }
+    
+        marker.data = data;
+    
+        // 마커 클릭 이벤트 등록
+        marker.on('click', onMarkerClick);
+    });
+}
+pingReportMarker()
+console.log(data_list)
 
 const container = document.getElementById('list');
 var revdata = data_list.slice().reverse();
@@ -672,3 +682,150 @@ document.getElementById('share').addEventListener("click", function () {
         share_announce_talk.style.opacity = '0';
     }, 1000);
 })
+const pastMarker = L.layerGroup().addTo(map)
+async function pastReport(id, type){
+    var pastReportData = []
+    const pastReportSnapshot = await getDocs(collection(db, "past-disaster",id, 'report'));
+    pastReportSnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        pastReportData.push(doc.data())
+    });
+
+    var red = 0;
+    var orange = 0;
+    var yellow = 0;
+    var green = 0;
+    var blue = 0;
+    var white = 0;
+    if(type=='지진'){
+        for(var i=0;i<pastReportData.length;i++){
+            var past_marker
+            console.log(pastReportData[i].location)
+            if (pastReportData[i].felt == 'red') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/red.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                red += 1
+                document.getElementById('past_red').textContent = ': ' + red;
+            } else if (pastReportData[i].felt == 'orange') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/orange.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                orange += 1
+                document.getElementById('past_orange').textContent = ': ' + orange;
+            } else if (pastReportData[i].felt == 'yellow') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/yellow.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                yellow += 1
+                document.getElementById('past_yellow').textContent = ': ' + yellow;
+            } else if (pastReportData[i].felt == 'green') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/green.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                green += 1
+                document.getElementById('past_green').textContent = ': ' + green;
+            } else if (pastReportData[i].felt == 'blue') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/blue.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                blue += 1
+                document.getElementById('past_blue').textContent = ': ' + blue;
+            } else if (pastReportData[i].felt == 'white') {
+                var past_icon = L.icon({
+                    iconUrl: '../resource/white.svg',
+                    iconSize: [20, 20]
+                })
+                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+                white += 1
+                document.getElementById('past_white').textContent = ': ' + white;
+            }
+            pastMarker.addLayer(past_marker)
+            console.log(red)
+        }
+        epicenter = L.icon({
+            iconUrl: '../resource/epicenter.png',
+            iconSize: [40, 40]
+        })
+    }
+}
+document.getElementById('back_report').addEventListener("click", function () {
+    document.getElementById('section1').style = 'display:block'
+    document.getElementById('section2').style = 'display:block'
+    document.getElementById('section3').style = 'display:block'
+    document.getElementById('past_legend').style = 'display:none'
+    document.getElementById('back_report').style = 'display:none'
+    document.getElementById('past_disaster').style = 'display:none'
+    document.getElementById('past_number').style = 'display:none'
+    document.getElementById('this_report').style ='display:none'
+    pastMarker.clearLayers();
+    map.setView([36.5, 127.5], 7)
+    pingReportMarker()
+})
+const pastSnapshot = await getDocs(collection(db, "past-disaster"));
+
+var pastData = []
+pastSnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+    pastData.push(doc.data())
+});
+// console.log(pastData.response.body.data.reports[0].report)
+const report_box = document.getElementById('report');
+pastData.reverse()
+console.log(pastData)
+for (var i = 0; i < pastData.length; i++) {
+    const currentData = pastData[i];
+    const divElement = document.createElement('div');
+    divElement.className = 'dataDiv';
+
+    const title = document.createElement('h4');
+    title.textContent = currentData.name;
+    divElement.appendChild(title);
+    const context = document.createElement('h3');
+    context.textContent = currentData.disasterType + ' | ' + currentData.value;
+    divElement.appendChild(context);
+
+    divElement.addEventListener('click', () => {
+        pastMarker.clearLayers();
+        reportMarker.clearLayers();
+        locMarker.clearLayers();
+        document.getElementById('section1').style = 'display:none'
+        document.getElementById('section2').style = 'display:none'
+        document.getElementById('section3').style = 'display:none'
+        document.getElementById('past_legend').style = 'display:block'
+        document.getElementById('back_report').style = 'display:block'
+        document.getElementById('past_disaster').style = 'display:block'
+        document.getElementById('past_number').style = 'display:block; display: flex;'
+        document.getElementById('this_report').style = 'display:block;'
+        console.log(currentData.id)
+        document.getElementById('this_report').href=`./convey/${currentData.id}/index.html`
+        pastReport(currentData.id, currentData.disasterType)
+        map.setView(currentData.location, 9)
+        // pingPastMarker()
+        var epi_marker = L.marker(currentData.location, { icon: epicenter }).addTo(map)
+        pastMarker.addLayer(epi_marker);
+        document.getElementById('red').textContent = '무시무시하게 흔들림';
+        document.getElementById('orange').textContent = '격렬하게 흔들림';
+        document.getElementById('yellow').textContent = '강하게 흔들림';
+        document.getElementById('green').textContent = '약하게 흔들림';
+        document.getElementById('blue').textContent = '흔들린것 같은 느낌';
+        document.getElementById('white').textContent = '흔들리지 않음';
+        document.getElementById('value').textContent = '규모: ' + currentData.value;
+        document.getElementById('past_name').textContent = currentData.name
+        document.getElementById('past_occurtime').textContent = timestampToDateTime(currentData.occurTime.seconds)
+        document.getElementById('other').textContent = currentData.other_info;
+        document.getElementById('free').textContent = currentData.free;
+    })
+
+    report_box.appendChild(divElement)
+}

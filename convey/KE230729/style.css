@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'NanumSquare', 'Noto Sans KR', sans-serif;
+    color: rgb(12, 0, 12);
+    max-width: 100%;
+    overflow-x: hidden;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+#title{
+    text-align: center;
+    background-color: blue;
+    color:white;
+    margin:0px;
+    padding:10px 0px;
+}
+#question{
+    width:50%;
+    margin:auto;
+    font-size:20px;
+    border-color: black;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    margin-top:10px;
+}
+.answer_sheet p{
+    width:45%;
+    margin:auto;
+    margin-top:5px;
+    padding:5px;
+    cursor: pointer;
+}
+#red{
+    border: 3px solid red;
+    border-radius: 5px;
+}
+#orange{
+    border: 3px solid orange;
+    border-radius: 5px;
+}
+#yellow{
+    border: 3px solid yellow;
+    border-radius: 5px;
+}
+#green{
+    border: 3px solid green;
+    border-radius: 5px;
+}
+#blue{
+    border: 3px solid blue;
+    border-radius: 5px;
+}
+#white{
+    border: 3px solid rgb(211, 211, 211);
+    border-radius: 5px;
+}
+#get_location{
+    border:1px solid black;
+    text-align: center;
+    width:200px;
+    margin:auto;
+    margin-top:20px;
+    padding:3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#location_explain{
+    width:50%;
+    margin:auto;
+    margin-top:10px;
+    color:gray;
+}
+#loc{
+    width:50%;
+    margin:auto;
+    margin-top:5px;
+}
