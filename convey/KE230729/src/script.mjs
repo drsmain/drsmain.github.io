@@ -70,9 +70,6 @@ function generateRandomKey() {
 }
 function getCurrentLocation() {
     if ('geolocation' in navigator) {
-        const options = {
-            enableHighAccuracy: true, // 높은 정확도 위치 정보를 요청
-        };
 
         // 위치 정보를 지원하는 경우
         navigator.geolocation.getCurrentPosition(
@@ -105,8 +102,7 @@ function getCurrentLocation() {
                         alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
                         break;
                 }
-            },
-            options // 옵션 객체 전달;
+            }
         );
     } else {
         console.error('브라우저가 위치 정보 수집을 지원하지 않습니다.');
