@@ -501,7 +501,6 @@ function onMarkerClick(e) {
     document.getElementById('see_report_title').textContent = `${data.name}님의 보고`;
     document.getElementById('report_time').textContent = timestampToDateTime((data.pressTime).seconds)
     document.getElementById('disaster').textContent = getDisasterDescription(data.disasterType)
-    console.log(data.disasterType);
     document.getElementById('disaster_asdf').textContent = ' 보고됨';
     document.getElementById('situation').textContent = getSituationDescription(data.situationType);
     document.getElementById('comment').textContent = data.comment;
@@ -586,7 +585,7 @@ function pingReportMarker(){
     });
 }
 pingReportMarker()
-console.log(data_list)
+// console.log(data_list)
 
 const container = document.getElementById('list');
 var revdata = data_list.slice().reverse();
@@ -687,7 +686,7 @@ async function pastReport(id, type){
     var pastReportData = []
     const pastReportSnapshot = await getDocs(collection(db, "past-disaster",id, 'report'));
     pastReportSnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         pastReportData.push(doc.data())
     });
 
@@ -700,7 +699,7 @@ async function pastReport(id, type){
     if(type=='지진'){
         for(var i=0;i<pastReportData.length;i++){
             var past_marker
-            console.log(pastReportData[i].location)
+            // console.log(pastReportData[i].location)
             if (pastReportData[i].felt == 'red') {
                 var past_icon = L.icon({
                     iconUrl: '../resource/red.svg',
@@ -751,7 +750,7 @@ async function pastReport(id, type){
                 document.getElementById('past_white').textContent = ': ' + white;
             }
             pastMarker.addLayer(past_marker)
-            console.log(red)
+            // console.log(red)
         }
         epicenter = L.icon({
             iconUrl: '../resource/epicenter.png',
@@ -776,13 +775,13 @@ const pastSnapshot = await getDocs(collection(db, "past-disaster"));
 
 var pastData = []
 pastSnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
     pastData.push(doc.data())
 });
 // console.log(pastData.response.body.data.reports[0].report)
 const report_box = document.getElementById('report');
 pastData.reverse()
-console.log(pastData)
+// console.log(pastData)
 for (var i = 0; i < pastData.length; i++) {
     const currentData = pastData[i];
     const divElement = document.createElement('div');
@@ -807,7 +806,7 @@ for (var i = 0; i < pastData.length; i++) {
         document.getElementById('past_disaster').style = 'display:block'
         document.getElementById('past_number').style = 'display:block; display: flex;'
         document.getElementById('this_report').style = 'display:block;'
-        console.log(currentData.id)
+        // console.log(currentData.id)
         document.getElementById('this_report').href=`./convey/${currentData.id}/index.html`
         pastReport(currentData.id, currentData.disasterType)
         map.setView(currentData.location, 9)
