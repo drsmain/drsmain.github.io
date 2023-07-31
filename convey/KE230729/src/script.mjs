@@ -172,7 +172,7 @@ document.getElementById('send').addEventListener('click', function (event) {
     lat = document.getElementById('lat').textContent
     lon = document.getElementById('lon').textContent;
     console.log(lat)
-    if (lat == '-' || lon == '-') {
+    if (lat == '-' || lon == '-' || lat=='---' || lon=='---') {
         alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.');
         location.reload()
     } else {
