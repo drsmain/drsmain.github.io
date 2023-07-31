@@ -156,6 +156,6 @@ document.getElementById('get_location').addEventListener('click', function (even
         });
     }, 100)
     setTimeout(function() {
-        location.reload();
+        window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
     }, 3000);
 });
