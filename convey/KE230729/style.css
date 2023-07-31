@@ -79,3 +79,13 @@ body {
     margin:auto;
     margin-top:5px;
 }
+#send{
+    border:1px solid black;
+    text-align: center;
+    width:200px;
+    margin:auto;
+    margin-top:20px;
+    padding:3px;
+    border-radius: 5px;
+    cursor: pointer;
+}

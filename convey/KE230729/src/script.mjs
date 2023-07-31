@@ -80,8 +80,8 @@ function getCurrentLocation() {
                 // 위치 정보를 가져온 경우
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                document.getElementById('lat').textContent =latitude
-                document.getElementById('lon').textContent =longitude;
+                document.getElementById('lat').textContent = latitude
+                document.getElementById('lon').textContent = longitude;
             },
             (error) => {
                 // 위치 정보를 가져오는데 실패한 경우
@@ -89,8 +89,8 @@ function getCurrentLocation() {
                     case error.PERMISSION_DENIED:
                         console.error('사용자가 위치 정보 수집 권한을 거부했습니다.');
                         alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
-                        document.getElementById('lat').textContent ='-'
-                        document.getElementById('lon').textContent ='-'
+                        document.getElementById('lat').textContent = '-'
+                        document.getElementById('lon').textContent = '-'
                         break;
                     case error.POSITION_UNAVAILABLE:
                         console.error('위치 정보를 사용할 수 없습니다.');
@@ -143,29 +143,46 @@ document.getElementById('white').addEventListener('click', function () {
     this.style = 'background-color:rgb(211, 211, 211);color:black;'
     clicked = 'white';
 })
+var lat;
+var lon;
 document.getElementById('get_location').addEventListener('click', function (event) {
     event.preventDefault(); // 폼 제출의 기본 동작 방지
     getCurrentLocation()
     console.log(loc)
-    var dis_id = document.getElementById('id').textContent
-    console.log(dis_id)
-    var id=nowTime()+generateRandomKey();
-    var lat;
-    var lon;
-    setTimeout(function(){
+    setTimeout(function () {
         lat = document.getElementById('lat').textContent
         lon = document.getElementById('lon').textContent;
         console.log(lat)
-        if(lat == '-' || lon == '-'){
-            alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.')
+        if (lat == '-' || lon == '-') {
+            alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.');
+            location.reload()
         }
+    }, 100)
+});
+document.getElementById('send').addEventListener('click', function (event) {
+    if (clicked == '') {
+        alert('항목을 선택해주세요')
+        location.reload()
+    }
+    event.preventDefault(); // 폼 제출의 기본 동작 방지
+    var dis_id = document.getElementById('id').textContent
+    console.log(dis_id)
+    var id = nowTime() + generateRandomKey();
+
+    lat = document.getElementById('lat').textContent
+    lon = document.getElementById('lon').textContent;
+    console.log(lat)
+    if (lat == '-' || lon == '-') {
+        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.');
+        location.reload()
+    } else {
         setDoc(doc(db, "past-disaster", dis_id, 'report', id), {
             id: id,
             location: [lat, lon],
             felt: clicked
         });
-    }, 100)
-    setTimeout(function() {
-        window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
-    }, 3000);
+        setTimeout(function () {
+            window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
+        }, 2000);
+    }
 });
