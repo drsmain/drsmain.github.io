@@ -159,30 +159,33 @@ document.getElementById('get_location').addEventListener('click', function (even
         }
     }, 100)
 });
+
 document.getElementById('send').addEventListener('click', function (event) {
+    event.preventDefault(); // 폼 제출의 기본 동작 방지
     if (clicked == '') {
         alert('항목을 선택해주세요')
         location.reload()
-    }
-    event.preventDefault(); // 폼 제출의 기본 동작 방지
-    var dis_id = document.getElementById('id').textContent
-    console.log(dis_id)
-    var id = nowTime() + generateRandomKey();
-
-    lat = document.getElementById('lat').textContent
-    lon = document.getElementById('lon').textContent;
-    console.log(lat)
-    if (lat == '-' || lon == '-' || lat=='---' || lon=='---') {
-        alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.');
-        location.reload()
-    } else {
-        setDoc(doc(db, "past-disaster", dis_id, 'report', id), {
-            id: id,
-            location: [lat, lon],
-            felt: clicked
-        });
-        setTimeout(function () {
-            window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
-        }, 2000);
+    }else{
+        var dis_id = document.getElementById('id').textContent
+        console.log(dis_id)
+        var id = nowTime() + generateRandomKey();
+    
+        lat = document.getElementById('lat').textContent
+        lon = document.getElementById('lon').textContent;
+        console.log(lat)
+        if (lat == '-' || lon == '-' || lat=='---' || lon=='---') {
+            alert('위치정보 수집에 실패했습니다. 다시 시도해주세요.');
+            location.reload()
+        } else {
+            setDoc(doc(db, "past-disaster", dis_id, 'report', id), {
+                id: id,
+                location: [lat, lon],
+                felt: clicked
+            });
+            setTimeout(function () {
+                window.location.replace("http://" + window.location.hostname + ((location.port == "" || location.port == undefined) ? "" : ":" + location.port) + "/index.html");
+            }, 2000);
+        }
     }
 });
+
