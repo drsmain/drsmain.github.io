@@ -75,8 +75,8 @@ function getCurrentLocation() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 // 위치 정보를 가져온 경우
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
+                const latitude = position.coords.latitude.toFixed(5);
+                const longitude = position.coords.longitude.toFixed(5);
                 document.getElementById('lat').textContent = latitude
                 document.getElementById('lon').textContent = longitude;
             },
