@@ -7,7 +7,6 @@ function getToday() {
 
     return year + month + day;
 }
-
 // var map = L.map('map').setView([30, 137], 4);
 var ping = L.icon({
     iconUrl: 'https://s.yimg.jp/images/weather/typhoon/ico_typhoon-white.png',
@@ -127,7 +126,7 @@ xhr.onreadystatechange = function () {
 
         }
         data = data.response.body.items.item
-        console.log(data)
+        // console.log(data)
         const uniqueTyphoonSeqSet = new Set();
         const num = [];
         const time = [];
@@ -139,12 +138,8 @@ xhr.onreadystatechange = function () {
                 time.push(item.announceTime)
             }
         });
-        console.log(num)
-        console.log(time)
-        console.log(num.length)
-        for (var i = 0; i < num.length; i++) {
-            var lat = [];
-            var lon = [];
+        for (var i = 0; i <= num.length-1; i++) {
+            var line = [];
             var now_url = 'https://apis.data.go.kr/1360000/TyphoonInfoService/getTyphoonInfo'; /*URL*/
             var now_queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'cl5s8i4yp76CKdNIDbn0RZDOYdzjAgzPaTtbVMDqnKWHomjjBtq%2BmajQpYggkXVlfj4FY2x304%2FuTVIm1DilIw%3D%3D'; /*Service Key*/
             now_queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*페이지 번호 조회*/
@@ -189,7 +184,7 @@ xhr.onreadystatechange = function () {
             now_queryParams += '&' + encodeURIComponent('toTmFc') + '=' + encodeURIComponent(getToday()); /*조회 끝 날짜 - 오늘*/
             xhr.open('GET', now_url + now_queryParams);
             var api_url = now_url + now_queryParams;
-            console.log(api_url)
+            // console.log(api_url)
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -198,11 +193,11 @@ xhr.onreadystatechange = function () {
                     } catch (error) {
 
                     }
-                    console.log(i)
                     myObj = myObj.response.body.items.item[i - 1]
                     // console.log(myObj)
                     // 현재 폭풍반경
-                    console.log(myObj)
+                    var line_b = [String(myObj.typLat), String(myObj.typLon)];
+                    // line.push(line_b)
                     myObj.typTm = (myObj.typTm).toString()
                     L.circle([myObj.typLat, myObj.typLon], {
                         color: 'red',
@@ -229,8 +224,6 @@ xhr.onreadystatechange = function () {
                         this.closePopup()
                     });
                     L.marker([myObj.typLat, myObj.typLon], { icon: ping }).addTo(map)
-                    now = [(myObj.typLat).toString(), (myObj.typLon).toString()]
-                    plz.push(now)
                     var customIcon = L.divIcon({
                         className: 'custom-icon',
                         html: `<div class="text-label" style="width:200px">제 ${myObj.typSeq}호 태풍 '${myObj.typName}'</div>`
@@ -310,13 +303,11 @@ xhr.onreadystatechange = function () {
 
                     divElement.appendChild(typhoon_cell)
                     container.append(divElement)
-                    console.log(divElement)
                     if (nowSize != '소형') {
                         sizeColor(nowSize);
                     }
                     if (nowStr != null) {
                         strengthColor(nowStr);
-                        console.log(nowStr)
                     }
                 }
             };
@@ -324,62 +315,80 @@ xhr.onreadystatechange = function () {
             xmlhttp.open("GET", api_url, true);
             xmlhttp.send();
 
-            // var info_xhr = new XMLHttpRequest();
-            // var info_url = 'https://apis.data.go.kr/1360000/TyphoonInfoService/getTyphoonFcst'; /*URL*/
-            // var info_queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'cl5s8i4yp76CKdNIDbn0RZDOYdzjAgzPaTtbVMDqnKWHomjjBtq%2BmajQpYggkXVlfj4FY2x304%2FuTVIm1DilIw%3D%3D'; /*Service Key*/
-            // info_queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*데이터 타입 - JSON*/
-            // info_queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /*데이터 타입 - JSON*/
-            // info_queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /*데이터 타입 - JSON*/
-            // info_queryParams += '&' + encodeURIComponent('tmFc') + '=' + encodeURIComponent(time[i]); /*조회 끝 날짜 - 오늘*/
-            // info_queryParams += '&' + encodeURIComponent('typSeq') + '=' + encodeURIComponent(num[i]); /*조회 끝 날짜 - 오늘*/
-            // info_xhr.open('GET', info_url + info_queryParams);
+            var info_xhr = new XMLHttpRequest();
+            var info_url = 'https://apis.data.go.kr/1360000/TyphoonInfoService/getTyphoonFcst'; /*URL*/
+            var info_queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'cl5s8i4yp76CKdNIDbn0RZDOYdzjAgzPaTtbVMDqnKWHomjjBtq%2BmajQpYggkXVlfj4FY2x304%2FuTVIm1DilIw%3D%3D'; /*Service Key*/
+            info_queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*데이터 타입 - JSON*/
+            info_queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /*데이터 타입 - JSON*/
+            info_queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /*데이터 타입 - JSON*/
+            info_queryParams += '&' + encodeURIComponent('tmFc') + '=' + encodeURIComponent(time[i]); /*조회 끝 날짜 - 오늘*/
+            info_queryParams += '&' + encodeURIComponent('typSeq') + '=' + encodeURIComponent(num[i]); /*조회 끝 날짜 - 오늘*/
+            info_xhr.open('GET', info_url + info_queryParams);
             // console.log(info_url + info_queryParams)
-            // info_xhr.open('GET', info_url + info_queryParams);
-            // info_xhr.onreadystatechange = function () {
-            //     if (this.readyState == 4) {
-            //         try {
-            //             var jsonData = JSON.parse(this.responseText);
-            //         } catch (error) {
+            info_xhr.open('GET', info_url + info_queryParams);
+            info_xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    try {
+                        var jsonData = JSON.parse(this.responseText);
+                    } catch (error) {
 
-            //         }
-            //         // console.log(jsonData.response.body.items.item)
-            //         var asdf = jsonData.response.body.items.item;
-            //         lat = []
-            //         lat.push(asdf[0].lat)
-            //         lat.push(asdf[0].lon)
-            //         plz.push(lat)
-            //         // console.log(latlon)
-            //         for (j = 0; j < latlon.length; j++) {
-            //             L.marker(latlon[j], { icon: ping }).addTo(map)
-            //         }
-            //         if (asdf[6].rad25 == 0) {
-            //             var d7 = L.circle(latlon[6], {
-            //                 color: 'white',
-            //                 fillColor: 'rgba(255, 0, 0, 0)',
-            //                 radius: rad[6] * 1000,
-            //                 dashArray: '10, 10',
-            //                 dashOffset: '0',
-            //                 weight: 2
-            //             }).addTo(map)
-            //         } else {
-            //             var d7 = L.circle(latlon[6], {
-            //                 color: 'red',
-            //                 fillOpacity: 0,
-            //                 radius: rad[6] * 1000,
-            //                 weight: 2
-            //             }).addTo(map)
-            //         }
-            //         d7.on('mouseover', function (e) {
-            //             this.bindPopup(`${(asdf[6].tm).slice(6, 8)}일 ${(asdf[6].tm).slice(8, 10)}시 ${(asdf[6].tm).slice(10, 12)}분 예상<br>중심기압: ${asdf[6].ps}hPa<br>최대풍속: ${asdf[6].ws}m/s<br>강도: ${getStrength(asdf[6].ws)}<br>진행: ${direction(asdf[6].dir)}, ${asdf[6].sp}km/h`)
-            //             this.openPopup()
-            //         })
-            //         d7.on('mouseout', function (e) {
-            //             this.closePopup()
-            //         });
-            //     }
+                    }
+                    // console.log(jsonData.response.body.items.item)
+                    var asdf = jsonData.response.body.items.item;
+                    asdf = asdf.slice().reverse();
+                    // console.log(asdf)
+                    asdf.forEach(asdf => {
+                        if(asdf.rad25 != '0'){
+                            var rad = Number(asdf.rad25) + Number(asdf.radPr)
+                            const red_circle = L.circle([asdf.lat, asdf.lon], {
+                                color: 'red',
+                                fillOpacity: 0,
+                                weight:1,
+                                radius: rad* 1000 // 원의 반지름 설정 (단위: 미터)
+                            }).addTo(map);
+                        }
+                    })
+                    asdf.forEach(asdf => {
+                        // 원 생성
+                        const circle = L.circle([asdf.lat, asdf.lon], {
+                            color: 'white',
+                            fillOpacity: 0.2,
+                            dashArray: '10, 10',
+                            dashOffset: '0',
+                            radius: asdf.radPr * 1000 // 원의 반지름 설정 (단위: 미터)
+                        }).addTo(map);
+                        L.marker([asdf.lat, asdf.lon], { icon: ping }).addTo(map);
+                        // 마커 생성 (기본적으로 숨김 처리)
+                        const marker = L.marker([asdf.lat, asdf.lon], {
+                            opacity: 0,
+                            title: '마커가 뜨는 위치' // 마커에 표시할 제목 설정
+                        }).addTo(map);
 
-            // }
-            // info_xhr.send('');
+                        // 마우스 이벤트 처리
+                        circle.on('mouseover', function () {
+                            this.bindPopup(`${(asdf.tm).slice(6,8)}일 ${(asdf.tm).slice(8,10)}시 ${(asdf.tm).slice(10,12)}분 예상<br>중심기압: ${asdf.ps}hPa<br>최대풍속: ${asdf.ws}m/s<br>강도: ${typStrength(asdf.ws)}<br>진행: ${asdf.dir}, ${asdf.sp}km/h`, {
+                                offset: [0, 0]
+                            })
+                            this.openPopup();
+                        });
+
+                        circle.on('mouseout', function () {
+                            this.closePopup()
+                        });
+                        var line_b = [asdf.lat, asdf.lon]
+                        line.push(line_b)
+                    });
+                    // console.log(line)
+                    const polyline = L.polyline(line, {
+                        color: 'black',
+                        weight: 2,
+                        opacity: 0.7,
+                        lineJoin: 'round'
+                    }).addTo(map);
+                }
+
+            }
+            info_xhr.send('');
         }
     }
 }
