@@ -114,11 +114,9 @@ queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(
 queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /*데이터 타입 - JSON*/
 queryParams += '&' + encodeURIComponent('tmFc') + '=' + encodeURIComponent(getToday()); /*조회 끝 날짜 - 오늘*/
 xhr.open('GET', url + queryParams);
-// console.log(url + queryParams)
+console.log(url + queryParams)
 xhr.open('GET', url + queryParams);
 xhr.onreadystatechange = function () {
-    var time = []
-    var num = []
     if (this.readyState == 4) {
         try {
             var data = JSON.parse(this.responseText);
@@ -138,7 +136,9 @@ xhr.onreadystatechange = function () {
                 time.push(item.announceTime)
             }
         });
-        for (var i = 0; i <= num.length-1; i++) {
+        // console.log(time)
+        console.log(time.length)
+        for (var i = 0; i < num.length; i++) {
             var line = [];
             var now_url = 'https://apis.data.go.kr/1360000/TyphoonInfoService/getTyphoonInfo'; /*URL*/
             var now_queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'cl5s8i4yp76CKdNIDbn0RZDOYdzjAgzPaTtbVMDqnKWHomjjBtq%2BmajQpYggkXVlfj4FY2x304%2FuTVIm1DilIw%3D%3D'; /*Service Key*/
@@ -184,7 +184,7 @@ xhr.onreadystatechange = function () {
             now_queryParams += '&' + encodeURIComponent('toTmFc') + '=' + encodeURIComponent(getToday()); /*조회 끝 날짜 - 오늘*/
             xhr.open('GET', now_url + now_queryParams);
             var api_url = now_url + now_queryParams;
-            // console.log(api_url)
+            console.log(api_url)
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -193,7 +193,9 @@ xhr.onreadystatechange = function () {
                     } catch (error) {
 
                     }
+                    console.log(i)
                     myObj = myObj.response.body.items.item[i - 1]
+                    console.log(myObj)
                     // console.log(myObj)
                     // 현재 폭풍반경
                     var line_b = [String(myObj.typLat), String(myObj.typLon)];
@@ -214,15 +216,15 @@ xhr.onreadystatechange = function () {
                         radius: (myObj.typ15) * 1000,
                         weight: 2
                     }).addTo(map);
-                    now.on('mouseover', function (e) {
-                        this.bindPopup(`${(myObj.typTm).slice(6, 8)}일 ${(myObj.typTm).slice(8, 10)}시 ${(myObj.typTm).slice(10, 12)}분 실황<br>중심기압: ${myObj.typPs}hPa<br>최대풍속: ${myObj.typWs}m/s<br>강도: ${typStrength(myObj.typWs)}<br>진행: ${direction(myObj.typDir)}, ${myObj.typSp}km/h`, {
-                            offset: [0, 0]
-                        })
-                        this.openPopup()
-                    });
-                    now.on('mouseout', function (e) {
-                        this.closePopup()
-                    });
+                    // now.on('mouseover', function (e) {
+                    //     this.bindPopup(`${(myObj.typTm).slice(6, 8)}일 ${(myObj.typTm).slice(8, 10)}시 ${(myObj.typTm).slice(10, 12)}분 실황<br>중심기압: ${myObj.typPs}hPa<br>최대풍속: ${myObj.typWs}m/s<br>강도: ${typStrength(myObj.typWs)}<br>진행: ${direction(myObj.typDir)}, ${myObj.typSp}km/h`, {
+                    //         offset: [0, 0]
+                    //     })
+                    //     this.openPopup()
+                    // });
+                    // now.on('mouseout', function (e) {
+                    //     this.closePopup()
+                    // });
                     L.marker([myObj.typLat, myObj.typLon], { icon: ping }).addTo(map)
                     var customIcon = L.divIcon({
                         className: 'custom-icon',
@@ -365,16 +367,16 @@ xhr.onreadystatechange = function () {
                         }).addTo(map);
 
                         // 마우스 이벤트 처리
-                        circle.on('mouseover', function () {
-                            this.bindPopup(`${(asdf.tm).slice(6,8)}일 ${(asdf.tm).slice(8,10)}시 ${(asdf.tm).slice(10,12)}분 예상<br>중심기압: ${asdf.ps}hPa<br>최대풍속: ${asdf.ws}m/s<br>강도: ${typStrength(asdf.ws)}<br>진행: ${asdf.dir}, ${asdf.sp}km/h`, {
-                                offset: [0, 0]
-                            })
-                            this.openPopup();
-                        });
+                        // circle.on('mouseover', function () {
+                        //     this.bindPopup(`${(asdf.tm).slice(6,8)}일 ${(asdf.tm).slice(8,10)}시 ${(asdf.tm).slice(10,12)}분 예상<br>중심기압: ${asdf.ps}hPa<br>최대풍속: ${asdf.ws}m/s<br>강도: ${typStrength(asdf.ws)}<br>진행: ${asdf.dir}, ${asdf.sp}km/h`, {
+                        //         offset: [0, 0]
+                        //     })
+                        //     this.openPopup();
+                        // });
 
-                        circle.on('mouseout', function () {
-                            this.closePopup()
-                        });
+                        // circle.on('mouseout', function () {
+                        //     this.closePopup()
+                        // });
                         var line_b = [asdf.lat, asdf.lon]
                         line.push(line_b)
                     });

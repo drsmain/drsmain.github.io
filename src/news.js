@@ -14,7 +14,6 @@ try {
 
         // 두 시간 간의 차이 계산 (밀리초 단위)
         const timeDifference = date1.getTime() - date2.getTime();
-
         switch (importance) {
             case '1':
                 news_box.css({

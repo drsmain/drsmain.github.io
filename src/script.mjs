@@ -153,9 +153,17 @@ const db = getFirestore(app);
 
 
 //first 지우기
+var onedaychecked = localStorage.getItem('oneday')
+if(onedaychecked < new Date()){
+    document.getElementById('first').style = 'display:none'
+    document.getElementById('back').style = 'display:none'
+}
 document.getElementById('first_close').addEventListener('click', function () {
     document.getElementById('first').style = 'display:none'
     document.getElementById('back').style = 'display:none'
+    if(document.getElementById('oneday').checked){
+        localStorage.setItem('oneday', validTime)
+    }
 })
 
 var now_loc = L.icon({
@@ -193,8 +201,8 @@ var now_icon = L.icon({
     iconSize: [25, 25]
 })
 function moveNowLoc(position) {
-    const latitude = position.coords.latitude.toFixed(6);
-    const longitude = position.coords.longitude.toFixed(6);
+    const latitude = position.coords.latitude.toFixed(5);
+    const longitude = position.coords.longitude.toFixed(5);
 
     map.setView([latitude, longitude], 15);
     L.marker([latitude, longitude], { icon: now_icon }).addTo(map);
@@ -469,8 +477,10 @@ document.getElementById('submit').addEventListener('click', function (event) {
                 location: [document.getElementById('input_lat').value, document.getElementById('input_lon').value],
                 disasterType: selectedOptions,
                 situationType: document.getElementById('situation_type').value,
-                comment: document.getElementById('explain').value
+                comment: document.getElementById('explain').value,
+                email: email
             });
+            document.getElementById('sending').style='display:block;'
             setTimeout(function() {
                 location.reload();
             }, 3000);
@@ -491,6 +501,40 @@ document.getElementById('see_mobile_tab').addEventListener('click', function () 
     }
     // console.log(count)
 })
+async function deleteReport(selected_report_email, id, name){
+    console.log(selected_report_email)
+    console.log(id)
+    if(selected_report_email == email){
+        console.log('똑같음')
+        document.getElementById('plzdelete').style="display:block;"
+        document.getElementById('notification').style="display:none;"
+        document.getElementById('nickname').textContent = name;
+        document.getElementById('input_nickname').placeholder = name;
+        document.getElementById('plzdelete').addEventListener("click",function(){
+            document.getElementById('plzdelete').style='display:none;'
+            document.getElementById('delete_box').style='display:block;'
+        })
+        document.getElementById('delete_cancel').addEventListener("click",function(){
+            document.getElementById('delete_box').style='display:none;'
+            document.getElementById('plzdelete').style='display:block;'
+        })
+        document.getElementById('delete_confirm').addEventListener("click",async function(){
+            console.log(document.getElementById('input_nickname').value)
+            if(document.getElementById('input_nickname').value == name){
+                if(selected_report_email == email){
+                    document.getElementById('sending_message').textContent='삭제중입니다...'
+                    await deleteDoc(doc(db, "report", id));
+                    document.getElementById('sending').style='display:block;';
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                }
+            }else{
+                alert('입력된 값이 제시된 값과 다릅니다.')
+            }
+        })
+    }
+}
 
 function onMarkerClick(e) {
     var marker = e.target;
@@ -499,14 +543,15 @@ function onMarkerClick(e) {
     // 정보를 표시할 div 엘리먼트 선택
     document.getElementById('see_report_box').style='display:block;margin:10px;'
     document.getElementById('see_report_title').textContent = `${data.name}님의 보고`;
-    document.getElementById('report_time').textContent = timestampToDateTime((data.pressTime).seconds)
+    document.getElementById('report_time').textContent = timestampToDateTime((data.pressTime).seconds)  + ' 기준';
     document.getElementById('disaster').textContent = getDisasterDescription(data.disasterType)
     document.getElementById('disaster_asdf').textContent = ' 보고됨';
     document.getElementById('situation').textContent = getSituationDescription(data.situationType);
     document.getElementById('comment').textContent = data.comment;
     situationStyle(data.situationType)
     map.setView(data.location, 12)
-    localStorage.setItem('report_id', data.id)
+    localStorage.setItem('report_id', data.id);
+    deleteReport((data.email), data.id, data.name)
 }
 const reportMarker = L.layerGroup().addTo(map);
 // const querySnapshot = await getDocs(collection(db, "report"));
@@ -586,7 +631,6 @@ function pingReportMarker(){
 }
 pingReportMarker()
 // console.log(data_list)
-
 const container = document.getElementById('list');
 var revdata = data_list.slice().reverse();
 for (let i = 0; i < revdata.length; i++) {
@@ -627,6 +671,7 @@ for (let i = 0; i < revdata.length; i++) {
 
         map.setView(currentData.location, 12)
         document.getElementById('notification_box').style = 'display:none;'
+        deleteReport((currentData.email), currentData.id, currentData.name)
     })
 
     container.appendChild(divElement)
@@ -682,7 +727,7 @@ document.getElementById('share').addEventListener("click", function () {
     }, 1000);
 })
 const pastMarker = L.layerGroup().addTo(map)
-async function pastReport(id, type){
+async function pastReport(id, type, value){
     var pastReportData = []
     const pastReportSnapshot = await getDocs(collection(db, "past-disaster",id, 'report'));
     pastReportSnapshot.forEach((doc) => {
@@ -696,66 +741,86 @@ async function pastReport(id, type){
     var green = 0;
     var blue = 0;
     var white = 0;
+    console.log(type)
     if(type=='지진'){
-        for(var i=0;i<pastReportData.length;i++){
-            var past_marker
-            // console.log(pastReportData[i].location)
-            if (pastReportData[i].felt == 'red') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/red.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                red += 1
-                document.getElementById('past_red').textContent = ': ' + red;
-            } else if (pastReportData[i].felt == 'orange') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/orange.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                orange += 1
-                document.getElementById('past_orange').textContent = ': ' + orange;
-            } else if (pastReportData[i].felt == 'yellow') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/yellow.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                yellow += 1
-                document.getElementById('past_yellow').textContent = ': ' + yellow;
-            } else if (pastReportData[i].felt == 'green') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/green.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                green += 1
-                document.getElementById('past_green').textContent = ': ' + green;
-            } else if (pastReportData[i].felt == 'blue') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/blue.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                blue += 1
-                document.getElementById('past_blue').textContent = ': ' + blue;
-            } else if (pastReportData[i].felt == 'white') {
-                var past_icon = L.icon({
-                    iconUrl: '../resource/white.svg',
-                    iconSize: [20, 20]
-                })
-                past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-                white += 1
-                document.getElementById('past_white').textContent = ': ' + white;
-            }
-            pastMarker.addLayer(past_marker)
-            // console.log(red)
-        }
+        document.getElementById('red').textContent = '무시무시하게 흔들림';
+        document.getElementById('orange').textContent = '격렬하게 흔들림';
+        document.getElementById('yellow').textContent = '강하게 흔들림';
+        document.getElementById('green').textContent = '약하게 흔들림';
+        document.getElementById('blue').textContent = '흔들린것 같은 느낌';
+        document.getElementById('white').textContent = '흔들리지 않음';
+        document.getElementById('value').textContent = '규모: ' + value;
         epicenter = L.icon({
             iconUrl: '../resource/epicenter.png',
             iconSize: [40, 40]
         })
+    }
+    if(type=='태풍'){
+        document.getElementById('red').textContent = '거주 불가능';
+        document.getElementById('orange').textContent = '무시무시한 피해를 입음';
+        document.getElementById('yellow').textContent = '많은 피해 발생';
+        document.getElementById('green').textContent = '피해 발생';
+        document.getElementById('blue').textContent = '약간의 피해 있음';
+        document.getElementById('white').textContent = '피해 없음';
+        document.getElementById('value').textContent = value;
+        epicenter = L.icon({
+            iconUrl: '../resource/epicenter.png',
+            iconSize: [40, 40]
+        })
+    }
+    for(var i=0;i<pastReportData.length;i++){
+        var past_marker
+        if (pastReportData[i].felt == 'red') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/red.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            red += 1
+            document.getElementById('past_red').textContent = ': ' + red;
+        } else if (pastReportData[i].felt == 'orange') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/orange.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            orange += 1
+            document.getElementById('past_orange').textContent = ': ' + orange;
+        } else if (pastReportData[i].felt == 'yellow') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/yellow.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            yellow += 1
+            document.getElementById('past_yellow').textContent = ': ' + yellow;
+        } else if (pastReportData[i].felt == 'green') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/green.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            green += 1
+            document.getElementById('past_green').textContent = ': ' + green;
+        } else if (pastReportData[i].felt == 'blue') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/blue.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            blue += 1
+            document.getElementById('past_blue').textContent = ': ' + blue;
+        } else if (pastReportData[i].felt == 'white') {
+            var past_icon = L.icon({
+                iconUrl: '../resource/white.svg',
+                iconSize: [20, 20]
+            })
+            past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
+            white += 1
+            document.getElementById('past_white').textContent = ': ' + white;
+        }
+        pastMarker.addLayer(past_marker)
+        // console.log(red)
     }
 }
 document.getElementById('back_report').addEventListener("click", function () {
@@ -808,18 +873,11 @@ for (var i = 0; i < pastData.length; i++) {
         document.getElementById('this_report').style = 'display:block;'
         // console.log(currentData.id)
         document.getElementById('this_report').href=`./convey/${currentData.id}/index.html`
-        pastReport(currentData.id, currentData.disasterType)
+        pastReport(currentData.id, currentData.disasterType, currentData.value)
         map.setView(currentData.location, 9)
         // pingPastMarker()
         var epi_marker = L.marker(currentData.location, { icon: epicenter }).addTo(map)
         pastMarker.addLayer(epi_marker);
-        document.getElementById('red').textContent = '무시무시하게 흔들림';
-        document.getElementById('orange').textContent = '격렬하게 흔들림';
-        document.getElementById('yellow').textContent = '강하게 흔들림';
-        document.getElementById('green').textContent = '약하게 흔들림';
-        document.getElementById('blue').textContent = '흔들린것 같은 느낌';
-        document.getElementById('white').textContent = '흔들리지 않음';
-        document.getElementById('value').textContent = '규모: ' + currentData.value;
         document.getElementById('past_name').textContent = currentData.name
         document.getElementById('past_occurtime').textContent = timestampToDateTime(currentData.occurTime.seconds)
         document.getElementById('other').textContent = currentData.other_info;

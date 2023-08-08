@@ -20,6 +20,8 @@
     <div id="first">
         <img src="../resource/cancel.svg" alt="X표시" id="first_close">
         <h1>이용시 주의사항</h1>
+        <input type="checkbox" id="oneday" value="onedaynosee" />
+        <label for="oneday">1일동안 보지 않기</label>
         <h3>재해 보고 시스템에 대해서</h3>
         <p>이 서비스는 다른 유저가 본 서비스에 보고한 내용을 확인하거나, 본인이 직접 보고할 수 있는 서비스입니다.</p>
         <p>최근 24시간 내에 보고된 상황들을 확인하실 수 있습니다. 다만, 상황에 따라 표시되는 기간이 변경될 수 있습니다.</p>
@@ -58,6 +60,15 @@
                             <h2 id="situation"></h2>
                             <p id="comment"></p>
                             <p id="notification">이 보고 신고하기</p>
+                            <p id="plzdelete">보고 삭제하기</p>
+                        </div>
+                        <div id="delete_box">
+                            <p>삭제하신 보고는 복구 할 수 없습니다.<br>그래도 삭제하시려면 아래 박스에 "<span id="nickname"></span>"을 입력하고, 삭제 버튼을 눌러주세요.</span></p>
+                            <input id="input_nickname" type="text">
+                            <div id="delete_can_or_con">
+                                <p id="delete_cancel">취소</p>
+                                <p id="delete_confirm">삭제하기</p>
+                            </div>
                         </div>
                         <div id="notification_box">
                             <p>신고하려는 이유가 무엇인가요?</p>
@@ -94,8 +105,8 @@
                         <form id="user-info-form">
                             <p>이름: <input id="name"></p>
                             <p style="margin: 5px 0px;">위도: <input id="input_lat" value="" required> 경도: <input id="input_lon" value="" required><button id="auto">자동</button></p>
-                            <div style="display: flex;">
-                                <div style="display: flex; flex-direction: column; width:36%;">
+                            <div style="display: flex;flex-direction: column;">
+                                <div style="display: flex; flex-direction: row;">
                                     <select id="disaster_type" multiple required>
                                         <option value="earthquake">지진</option>
                                         <option value="heavyrain">폭우</option>
@@ -123,7 +134,7 @@
                                         <option value="usual">평소</option>
                                     </select>
                                 </div>
-                                <div style="width:60%; margin-left: 3%;">
+                                <div style="width:90%; margin-left: 3%;">
                                     <p style="margin: 5px 0px;" >어떤 상황인가요?</p>
                                     <textarea id="explain" style="max-width: 100%; min-height: 72%;"></textarea>
                                 </div>
@@ -210,13 +221,16 @@
             <h1 id="news_content"></h1>
         </div>
     </div>
+    <div id="sending">
+        <p id="sending_message">전송중입니다...</p>
+    </div>
 </body>
 <script src="./src/script.mjs" type="module"></script>
 <script src="./src/notification.js"></script>
 <script src="./src/news.js"></script>
 <script src="./src/earthquake.js"></script>
 <script src="./src/map.js"></script>
-<script src="./src/typhoon.js"></script>
+<!-- <script src="./src/typhoon.js"></script> -->
 <script>
     AOS.init();
 </script>
