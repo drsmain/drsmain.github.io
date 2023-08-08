@@ -154,9 +154,12 @@ const db = getFirestore(app);
 
 //first 지우기
 var onedaychecked = localStorage.getItem('oneday')
-if(onedaychecked < new Date()){
-    document.getElementById('first').style = 'display:none'
-    document.getElementById('back').style = 'display:none'
+console.log(onedaychecked)
+if(onedaychecked != null){
+    if(onedaychecked < new Date()){
+        document.getElementById('first').style = 'display:none'
+        document.getElementById('back').style = 'display:none'
+    }
 }
 document.getElementById('first_close').addEventListener('click', function () {
     document.getElementById('first').style = 'display:none'
