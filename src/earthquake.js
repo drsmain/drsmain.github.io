@@ -221,7 +221,7 @@ function animateCircle(circle, speed, prevTimestamp) {
 }
 xhr.onreadystatechange = function () {
     if (this.readyState == 4) {
-        console.log(url + queryParams)
+        // console.log(url + queryParams)
         try {
             var myObj = JSON.parse(this.responseText);
             // var myObj = earthquake_json;

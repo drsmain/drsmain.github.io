@@ -502,10 +502,10 @@ document.getElementById('see_mobile_tab').addEventListener('click', function () 
     // console.log(count)
 })
 async function deleteReport(selected_report_email, id, name){
-    console.log(selected_report_email)
-    console.log(id)
+    // console.log(selected_report_email)
+    // console.log(id)
     if(selected_report_email == email){
-        console.log('똑같음')
+        // console.log('똑같음')
         document.getElementById('plzdelete').style="display:block;"
         document.getElementById('notification').style="display:none;"
         document.getElementById('nickname').textContent = name;
@@ -519,7 +519,7 @@ async function deleteReport(selected_report_email, id, name){
             document.getElementById('plzdelete').style='display:block;'
         })
         document.getElementById('delete_confirm').addEventListener("click",async function(){
-            console.log(document.getElementById('input_nickname').value)
+            // console.log(document.getElementById('input_nickname').value)
             if(document.getElementById('input_nickname').value == name){
                 if(selected_report_email == email){
                     document.getElementById('sending_message').textContent='삭제중입니다...'
@@ -726,6 +726,12 @@ document.getElementById('share').addEventListener("click", function () {
         share_announce_talk.style.opacity = '0';
     }, 1000);
 })
+// var red_icon = 0;
+// var orange_icon = 0;
+// var yellow_icon = 0;
+// var green_icon = 0;
+// var blue_icon = 0;
+// var white_icon = 0;
 const pastMarker = L.layerGroup().addTo(map)
 async function pastReport(id, type, value){
     var pastReportData = []
@@ -734,14 +740,6 @@ async function pastReport(id, type, value){
         // console.log(doc.id, " => ", doc.data());
         pastReportData.push(doc.data())
     });
-
-    var red = 0;
-    var orange = 0;
-    var yellow = 0;
-    var green = 0;
-    var blue = 0;
-    var white = 0;
-    console.log(type)
     if(type=='지진'){
         document.getElementById('red').textContent = '무시무시하게 흔들림';
         document.getElementById('orange').textContent = '격렬하게 흔들림';
@@ -776,48 +774,48 @@ async function pastReport(id, type, value){
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            red += 1
-            document.getElementById('past_red').textContent = ': ' + red;
+            // red_icon += 1
+            // document.getElementById('past_red').textContent = ': ' + red_icon;
         } else if (pastReportData[i].felt == 'orange') {
             var past_icon = L.icon({
                 iconUrl: '../resource/orange.svg',
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            orange += 1
-            document.getElementById('past_orange').textContent = ': ' + orange;
+            // orange_icon += 1
+            // document.getElementById('past_orange').textContent = ': ' + orange_icon;
         } else if (pastReportData[i].felt == 'yellow') {
             var past_icon = L.icon({
                 iconUrl: '../resource/yellow.svg',
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            yellow += 1
-            document.getElementById('past_yellow').textContent = ': ' + yellow;
+            // yellow_icon += 1
+            // document.getElementById('past_yellow').textContent = ': ' + yellow_icon;
         } else if (pastReportData[i].felt == 'green') {
             var past_icon = L.icon({
                 iconUrl: '../resource/green.svg',
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            green += 1
-            document.getElementById('past_green').textContent = ': ' + green;
+            // green_icon += 1
+            // document.getElementById('past_green').textContent = ': ' + green_icon;
         } else if (pastReportData[i].felt == 'blue') {
             var past_icon = L.icon({
                 iconUrl: '../resource/blue.svg',
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            blue += 1
-            document.getElementById('past_blue').textContent = ': ' + blue;
+            // blue_icon += 1
+            // document.getElementById('past_blue').textContent = ': ' + blue_icon;
         } else if (pastReportData[i].felt == 'white') {
             var past_icon = L.icon({
                 iconUrl: '../resource/white.svg',
                 iconSize: [20, 20]
             })
             past_marker = L.marker(pastReportData[i].location, { icon: past_icon }).addTo(map)
-            white += 1
-            document.getElementById('past_white').textContent = ': ' + white;
+            // white_icon += 1
+            // document.getElementById('past_white').textContent = ': ' + white_icon;
         }
         pastMarker.addLayer(past_marker)
         // console.log(red)
@@ -830,7 +828,7 @@ document.getElementById('back_report').addEventListener("click", function () {
     document.getElementById('past_legend').style = 'display:none'
     document.getElementById('back_report').style = 'display:none'
     document.getElementById('past_disaster').style = 'display:none'
-    document.getElementById('past_number').style = 'display:none'
+    // document.getElementById('past_number').style = 'display:none'
     document.getElementById('this_report').style ='display:none'
     pastMarker.clearLayers();
     map.setView([36.5, 127.5], 7)
@@ -869,10 +867,10 @@ for (var i = 0; i < pastData.length; i++) {
         document.getElementById('past_legend').style = 'display:block'
         document.getElementById('back_report').style = 'display:block'
         document.getElementById('past_disaster').style = 'display:block'
-        document.getElementById('past_number').style = 'display:block; display: flex;'
+        // document.getElementById('past_number').style = 'display:block; display: flex;'
         document.getElementById('this_report').style = 'display:block;'
         // console.log(currentData.id)
-        document.getElementById('this_report').href=`./convey/${currentData.id}/index.html`
+        document.getElementById('this_report').href=`./convey/${currentData.id}/index.html`;
         pastReport(currentData.id, currentData.disasterType, currentData.value)
         map.setView(currentData.location, 9)
         // pingPastMarker()
