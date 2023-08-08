@@ -154,9 +154,11 @@ const db = getFirestore(app);
 
 //first 지우기
 var onedaychecked = localStorage.getItem('oneday')
-console.log(onedaychecked)
 if(onedaychecked != null){
-    if(onedaychecked < new Date()){
+    var givenDate = new Date(onedaychecked.slice(0,-9))
+    var currentDate = new Date()
+    console.log(1)
+    if(givenDate > currentDate){
         document.getElementById('first').style = 'display:none'
         document.getElementById('back').style = 'display:none'
     }
