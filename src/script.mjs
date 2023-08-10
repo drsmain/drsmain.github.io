@@ -543,6 +543,7 @@ async function deleteReport(selected_report_email, id, name){
 
 function onMarkerClick(e) {
     var marker = e.target;
+    document.getElementById('plzdelete').style="display:none;"
     var data = marker.data; // 마커에 연결된 데이터 객체
 
     // 정보를 표시할 div 엘리먼트 선택
@@ -665,6 +666,7 @@ for (let i = 0; i < revdata.length; i++) {
     }
 
     divElement.addEventListener('click', () => {
+        document.getElementById('plzdelete').style="display:none;"
         document.getElementById('see_report_box').style= 'display:block; margin:10px;'
         document.getElementById('see_report_title').textContent = `${currentData.name}님의 보고`;
         document.getElementById('report_time').textContent = timestampToDateTime((currentData.pressTime).seconds) + ' 기준';
