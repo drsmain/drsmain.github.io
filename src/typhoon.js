@@ -194,7 +194,7 @@ xhr.onreadystatechange = function () {
 
                     }
                     console.log(i)
-                    myObj = myObj.response.body.items.item[i - 1]
+                    myObj = myObj.response.body.items.item[0]
                     console.log(myObj)
                     // console.log(myObj)
                     // 현재 폭풍반경

@@ -65,13 +65,59 @@
                             <p id="comment"></p>
                             <p id="notification">이 보고 신고하기</p>
                             <p id="plzdelete">보고 삭제하기</p>
-                        </div>
-                        <div id="delete_box">
-                            <p>삭제하신 보고는 복구 할 수 없습니다.<br>그래도 삭제하시려면 아래 박스에 "<span id="nickname"></span>"을 입력하고, 삭제 버튼을 눌러주세요.</span></p>
-                            <input id="input_nickname" type="text">
-                            <div id="delete_can_or_con">
-                                <p id="delete_cancel">취소</p>
-                                <p id="delete_confirm">삭제하기</p>
+                            <div id="delete_box">
+                                <p>삭제하신 보고는 복구 할 수 없습니다.<br>그래도 삭제하시려면 아래 박스에 "<span id="nickname"></span>"을 입력하고, 삭제 버튼을 눌러주세요.</span></p>
+                                <input id="input_nickname" type="text">
+                                <div id="delete_can_or_con">
+                                    <p id="delete_cancel">취소</p>
+                                    <p id="delete_confirm">삭제하기</p>
+                                </div>
+                            </div>
+                            <p id="plzcorrect">보고 수정하기</p>
+                            <div id="correct_box">
+                                <form id="correct_form">
+                                    <p>이름: <input id="correct_name"></p>
+                                    <p style="margin: 5px 0px;">위도: <input id="correct_lat" value="" required> 경도: <input id="correct_lon" value="" required><button id="correct_auto">자동</button></p>
+                                    <div style="display: flex;flex-direction: column;">
+                                        <div style="display: flex; flex-direction: row;">
+                                            <select id="correct_disaster_type" multiple required>
+                                                <option value="earthquake">지진</option>
+                                                <option value="heavyrain">폭우</option>
+                                                <option value="lightning">번개</option>
+                                                <option value="landslide">산사태</option>
+                                                <option value="flood">홍수</option>
+                                                <option value="fire">화재</option>
+                                                <option value="hot">폭염</option>
+                                                <option value="cold">한파</option>
+                                                <option value="heavysnow">폭설</option>
+                                                <option value="wind">강풍</option>
+                                                <option value="tornado">토네이도</option>
+                                                <option value="tsunami">지진해일</option>
+                                                <option value="surge">폭풍해일</option>
+                                                <option value="pollution">대기오염</option>
+                                                <option value="social">사회재난</option>
+                                                <option value="volcano">화산</option>
+                                                <option value="etc">기타</option>
+                                            </select>
+                                            <select id="correct_situation_type" required>
+                                                <option value="occur">재해 발생!</option>
+                                                <option value="occur_bf">재해 발생 직전</option>
+                                                <option value="danger">위험 감지</option>
+                                                <option value="difference">평소와 다름</option>
+                                                <option value="usual">평소</option>
+                                            </select>
+                                        </div>
+                                        <div style="width:90%; margin-left: 3%;">
+                                            <p style="margin: 5px 0px;" >어떤 상황인가요?</p>
+                                            <textarea id="correct_explain" style="max-width: 100%; min-height: 72%;"></textarea>
+                                        </div>
+                                    </div>
+                                    <h4 style="margin-top:10px">정확한 정보를 공유하면 큰 도움이 될 수 있어요.</h4>
+                                </form>
+                                <div id="correct_can_or_con">
+                                    <p id="correct_cancel">취소</p>
+                                    <p id="correct_confirm">수정하기</p>
+                                </div>
                             </div>
                         </div>
                         <div id="notification_box">

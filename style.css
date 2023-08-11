@@ -95,7 +95,7 @@ h1 {
 }
 
 #input_lat,
-#input_lon {
+#input_lon, #correct_lat, #correct_lon {
     width: 70px;
 }
 
@@ -117,9 +117,19 @@ h1 {
     width: 100px;
 }
 
-#explain {
+#explain,#correct_explain {
     width: 100%;
     height: 50px;
+}
+#correct_box{
+    z-index: 1000;
+    right:15px;
+    display: none;
+    background-color: white;
+    padding:20px;
+    border:1px solid black;
+    border-radius: 20px;
+    margin:10px;
 }
 
 #see_report_title {
@@ -148,15 +158,15 @@ h1 {
     height: 100vh;
     overflow: auto;
 }
-#disaster_type{
+#disaster_type, #correct_disaster_type{
     width:100%;
 }
-#disaster_type>* {
+#disaster_type>*,#correct_disaster_type>* {
     padding: 5px;
     font-family: 'NanumSquare';
     font-size: 15px;
 }
-#auto{
+#auto, #correct_auto{
     background-color: white;
     padding:2px 7px;
     margin:5px;
@@ -649,10 +659,20 @@ h1 {
     padding: 3px;
     width: 50%;
     margin: auto;
-    margin-top: 10px;
     display: none;
     cursor: pointer;
     margin-top: 30px;
+}
+#plzcorrect{
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    padding: 3px;
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    display: none;
+    cursor: pointer;
 }
 #delete_box{
     background-color: white;
@@ -677,6 +697,30 @@ h1 {
     display: flex;
 }
 #delete_confirm{
+    background-color: rgb(255, 178, 178);
+    width:30%;
+    margin:auto;
+    margin-top:10px;
+    border:2px red solid;
+    border-radius: 10px;
+    text-align: center;
+    padding:5px 0px;
+    cursor: pointer;
+}
+#correct_cancel{
+    width:30%;
+    margin:auto;
+    margin-top:10px;
+    border:2px black solid;
+    border-radius: 10px;
+    text-align: center;
+    padding:5px 0px;
+    cursor: pointer;
+}
+#correct_can_or_con{
+    display: flex;
+}
+#correct_confirm{
     background-color: rgb(255, 178, 178);
     width:30%;
     margin:auto;

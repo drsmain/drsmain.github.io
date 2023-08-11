@@ -223,6 +223,28 @@ document.getElementById('auto').addEventListener('click', function (event) {
         console.error('Geolocation을 지원하지 않는 브라우저입니다.');
     }
 });
+document.getElementById('correct_auto').addEventListener('click', function (event) {
+    event.preventDefault(); // 폼 제출의 기본 동작 방지
+    var options = {
+        enableHighAccuracy: true
+    };
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showCorrectPosition, showError, options);
+    } else {
+        console.error('Geolocation을 지원하지 않는 브라우저입니다.');
+    }
+});
+function showCorrectPosition(position){
+    locMarker.clearLayers();
+    const latitude = position.coords.latitude.toFixed(6);
+    const longitude = position.coords.longitude.toFixed(6);
+
+    document.getElementById('correct_lat').value = latitude;
+    document.getElementById('correct_lon').value = longitude;
+
+    var now_loc_marker = L.marker([latitude, longitude], { icon: now_loc }).addTo(map)
+    locMarker.addLayer(now_loc_marker)
+}
 function showPosition(position) {
     locMarker.clearLayers();
     const latitude = position.coords.latitude.toFixed(6);
@@ -516,8 +538,10 @@ async function deleteReport(selected_report_email, id, name){
         document.getElementById('nickname').textContent = name;
         document.getElementById('input_nickname').placeholder = name;
         document.getElementById('plzdelete').addEventListener("click",function(){
+            document.getElementById('correct_box').style='display:none;'
             document.getElementById('plzdelete').style='display:none;'
             document.getElementById('delete_box').style='display:block;'
+            document.getElementById('plzcorrect').style='display:block;'
         })
         document.getElementById('delete_cancel').addEventListener("click",function(){
             document.getElementById('delete_box').style='display:none;'
@@ -540,6 +564,81 @@ async function deleteReport(selected_report_email, id, name){
         })
     }
 }
+async function correctReport(data){
+    console.log(data)
+    if(data.email == email){
+        document.getElementById('plzcorrect').style="display:block;"
+        document.getElementById('correct_name').value = data.name;
+        document.getElementById('correct_lat').value = data.location[0];
+        document.getElementById('correct_lon').value = data.location[1];
+        document.getElementById('correct_lat').value = data.location[0];
+        for(var i = 0; i < document.getElementById("correct_disaster_type").options.length; i++){
+            var option = document.getElementById("correct_disaster_type").options[i];
+            option.selected = (data.disasterType).includes(option.value);
+        }
+        for(var i = 0; i < document.getElementById('correct_situation_type').options.length; i++){
+            var option = document.getElementById('correct_situation_type').options[i];
+            if (option.value == data.situationType) {
+                option.selected = true;
+                break; // 선택된 옵션을 찾았으면 루프 종료
+            }
+        }
+        document.getElementById('correct_explain').value = data.comment;
+        
+        document.getElementById('plzcorrect').addEventListener("click",function(){
+            document.getElementById('delete_box').style='display:none;'
+            document.getElementById('plzcorrect').style='display:none;'
+            document.getElementById('correct_box').style='display:block;'
+            document.getElementById('plzdelete').style='display:block;'
+        })
+        document.getElementById('correct_cancel').addEventListener("click",function(){
+            document.getElementById('correct_box').style='display:none;'
+            document.getElementById('plzcorrect').style='display:block;'
+        })
+        document.getElementById('correct_confirm').addEventListener("click", function(){
+            var disaster = document.getElementById('correct_disaster_type');
+            var selectedOptions = Array.from(disaster.selectedOptions).map(function (option) {
+                return option.value;
+            });
+            if ((document.getElementById('correct_name').value).length == 0) {
+                alert('이름을 입력해주세요.');
+                return;
+            }
+            if (selectedOptions.length === 0) {
+                alert('적어도 하나의 재해 종류를 선택해주세요.');
+                return;
+            }
+            if (document.getElementById('correct_lat').value == '' && document.getElementById('correct_lon').value == '') {
+                alert('위치정보를 입력해주세요.');
+                return;
+            }
+
+            var ok = confirm(`입력하신 정보가 확실합니까?
+> ${getDisasterDescription(selectedOptions)} | ${getSituationDescription(document.getElementById('correct_situation_type').value)}
+> ${document.getElementById('correct_explain').value}`)
+            if(ok){
+                setDoc(doc(db, "report", data.id), {
+                    name: document.getElementById('correct_name').value,
+                    id: data.id,
+                    pressTime: data.pressTime,
+                    validTime: data.validTime,
+                    location: [document.getElementById('correct_lat').value, document.getElementById('correct_lon').value],
+                    disasterType: selectedOptions,
+                    situationType: document.getElementById('correct_situation_type').value,
+                    comment: document.getElementById('correct_explain').value,
+                    email: email
+                });
+                document.getElementById('sending').style='display:block;'
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            } else {
+                alert('다시한번 확인해주세요')
+            }
+        })
+
+    }
+}
 
 function onMarkerClick(e) {
     var marker = e.target;
@@ -558,6 +657,7 @@ function onMarkerClick(e) {
     map.setView(data.location, 12)
     localStorage.setItem('report_id', data.id);
     deleteReport((data.email), data.id, data.name)
+    correctReport(data)
 }
 const reportMarker = L.layerGroup().addTo(map);
 // const querySnapshot = await getDocs(collection(db, "report"));
@@ -679,6 +779,7 @@ for (let i = 0; i < revdata.length; i++) {
         map.setView(currentData.location, 12)
         document.getElementById('notification_box').style = 'display:none;'
         deleteReport((currentData.email), currentData.id, currentData.name)
+        correctReport(currentData)
     })
 
     container.appendChild(divElement)
