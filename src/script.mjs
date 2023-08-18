@@ -157,7 +157,7 @@ var onedaychecked = localStorage.getItem('oneday')
 if(onedaychecked != null){
     var givenDate = new Date(onedaychecked.slice(0,-9))
     var currentDate = new Date()
-    console.log(1)
+    // console.log(1)
     if(givenDate > currentDate){
         document.getElementById('first').style = 'display:none'
         document.getElementById('back').style = 'display:none'
@@ -565,8 +565,9 @@ async function deleteReport(selected_report_email, id, name){
     }
 }
 async function correctReport(data){
-    console.log(data)
+    // console.log(data)
     if(data.email == email){
+        document.getElementById('notification_box').style="display:none;"
         document.getElementById('plzcorrect').style="display:block;"
         document.getElementById('correct_name').value = data.name;
         document.getElementById('correct_lat').value = data.location[0];
@@ -643,6 +644,7 @@ async function correctReport(data){
 function onMarkerClick(e) {
     var marker = e.target;
     document.getElementById('plzdelete').style="display:none;"
+    document.getElementById('plzcorrect').style="display:none;"
     var data = marker.data; // 마커에 연결된 데이터 객체
 
     // 정보를 표시할 div 엘리먼트 선택
@@ -767,6 +769,7 @@ for (let i = 0; i < revdata.length; i++) {
 
     divElement.addEventListener('click', () => {
         document.getElementById('plzdelete').style="display:none;"
+        document.getElementById('plzcorrect').style="display:none;"
         document.getElementById('see_report_box').style= 'display:block; margin:10px;'
         document.getElementById('see_report_title').textContent = `${currentData.name}님의 보고`;
         document.getElementById('report_time').textContent = timestampToDateTime((currentData.pressTime).seconds) + ' 기준';
@@ -992,3 +995,44 @@ for (var i = 0; i < pastData.length; i++) {
 
     report_box.appendChild(divElement)
 }
+
+const airraid = await getDocs(collection(db, "important"));
+airraid.forEach((doc) => {
+    // console.log(doc.id, " => ", doc.data());
+    if(doc.id == 'air-raid'){
+        var data = doc.data()
+        if(data.show == true){
+            document.getElementById('air-raid').style = 'display:block; '
+            if(data.test == true){
+                document.getElementById('is_drill').style='display:block';
+            }
+            var time = timestampToDateTime((data.time).seconds)
+            document.getElementById('air-raid-time').textContent = time.slice(10,12)+'일 ' + time.slice(13,16) + ':' + time.slice(18,20)
+            if(data.type == '공습경보'){
+                document.getElementById('air-raid-title').textContent = '공습경보'
+                document.getElementById('air-raid-title-en').textContent = 'AIR RAID ALERM'
+                document.getElementById('air-raid').style.backgroundColor = 'red';
+                document.getElementById('air-raid-text').textContent = '가까운 지하시설로 대피하고 방송청취'
+            }else if(data.type == '경계경보'){
+                document.getElementById('air-raid-title').textContent = '경계경보'
+                document.getElementById('air-raid-title-en').textContent = 'WARNING ALERM'
+                document.getElementById('air-raid').style.backgroundColor = 'blue';
+                document.getElementById('air-raid-text').textContent = '가까운 지하시설로 대피할 준비하고 방송청취'
+            }else if(data.type == '화생방경보'){
+                document.getElementById('air-raid-title').textContent = '화생방경보'
+                document.getElementById('air-raid-title-en').textContent = 'CBR ALERM'
+                document.getElementById('air-raid').style.backgroundColor = 'yellow';
+                document.getElementById('air-raid').style.color = 'black';
+                document.getElementById('air-raid-text').textContent = '호흡기 및 피부 등을 보호하여 오염되지 않은 지역으로 대피하고 방송청취'
+            }else if(data.type == '경보해제'){
+                document.getElementById('air-raid-title').textContent = '경보해제'
+                document.getElementById('air-raid-title-en').textContent = 'ALERM LIFTED'
+                document.getElementById('air-raid').style.backgroundColor = 'white';
+                document.getElementById('air-raid').style.color = 'black';
+                document.getElementById('air-raid-text').textContent = '정상업무에 복귀'
+            }
+            document.getElementById('air-raid-area').textContent = data.area
+        }
+    }
+    // pastReportData.push(doc.data())
+});
