@@ -738,6 +738,63 @@ h1 {
     margin:5px 0px;
     width:100%;
 }
+#disaster_link{
+    border: 1px solid red;
+    display: flex;
+    margin: 20px 10px;
+    padding:10px 5px;
+    background-color: rgb(255, 178, 178);
+    border-radius: 10px;
+    text-decoration: none;
+    color:white;
+    flex-direction: column;
+}
+#disaster_link h2{
+    width:100%;
+    border-color: white;
+    border-style: solid;
+    border-width: 0px 0px 3px 0px;
+    padding: 0px 0px 2px 0px;
+}
+#disaster_link p{
+    width:100%;
+    padding: 3px 0px 0px 0px;
+}
+#is_drill{
+    text-align:center;
+    padding: 10px;
+    display: none;
+}
+#air-raid{
+    background-color: red;
+    color:white;
+    margin: 20px 10px;
+    display: none;
+}
+#air-raid-title{
+    font-size: 50px;
+    text-align: center;
+}
+#air-raid-title-en, #air-raid-time{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+#air-raid-top{
+    border-width:0px 0px 1px 0px;
+    border-color: black;
+    border-style: solid;
+}
+#air-raid-area{
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+}
+#air-raid-text{
+    text-align: center;
+    font-size: 25px;
+    padding: 5px;
+}
 @media screen and (max-width : 800px) {
     #map{
         width:100vw;
