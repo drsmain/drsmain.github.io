@@ -121,7 +121,7 @@ xmlhttp.open("GET", api_url, true);
 xmlhttp.send();
 
 var xhr = new XMLHttpRequest();
-var url = 'http://apis.data.go.kr/1360000/WthrWrnInfoService/getPwnStatus'; /*URL*/
+var url = 'https://apis.data.go.kr/1360000/WthrWrnInfoService/getPwnStatus'; /*URL*/
 var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'cl5s8i4yp76CKdNIDbn0RZDOYdzjAgzPaTtbVMDqnKWHomjjBtq%2BmajQpYggkXVlfj4FY2x304%2FuTVIm1DilIw%3D%3D'; /*Service Key*/
 queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
