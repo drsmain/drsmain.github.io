@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+html{
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'NanumSquare', 'Noto Sans KR', sans-serif;
+    color: rgb(12, 0, 12);
+    max-width: 100%;
+    overflow-x: hidden;
+    line-height: 1.5;
+    word-break: keep-all;
+    background-color: rgb(246,248,252);
+}
+h1, h2, h3, h4, p, span{
+    margin: 0px;
+    color: rgb(12, 0, 12);
+    margin: 0px 10px;
+}
+a{
+    text-decoration: none;
+}
+#main{
+    background-color: white;
+    width:1000px;
+    margin: auto;
+}
+#bar{
+    position: fixed;
+    top:0px;
+    background-color: white;
+    width:1000px;
+    padding-top: 10px;    
+    box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 2px 3px 0 rgba(0,0,0,.12);
+}
+#tab{
+    display: flex;
+}
+#tab > * {
+    flex-grow: 1;
+    text-align: center;
+    padding:5px;
+    margin:0px;
+    color: rgb(12, 0, 12);
+}
+#tab > *:nth-child(2n), #tab > *:nth-child(5n-4){
+    border-color: black;
+    border-width: 0px 1px 0px 0px;
+    border-style: solid;
+}
+#selected{
+    background-color: #ff6673;
+    color:white;
+}
+#menu{
+    display: flex;
+    margin: 10px;
+    flex-wrap: wrap;
+}
+#menu a{
+    margin-right: 40px;
+    color:rgb(70, 70, 255);
+}
+.block{
+    margin-top:10px;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color:rgb(193, 193, 193);
+    padding-bottom: 10px;
+}
+#content a svg{
+    margin-bottom:-4px;
+    margin-left: 10px;
+}
+#content a{
+    color:rgb(70, 70, 255);
+}
+.small_title{
+    margin:10px;
+    background-color: rgb(246,248,252);
+    border-width: 0px 0px 0px 2px;
+    padding: 5px;
+    border-color: #ff6673;
+    border-style: solid;
+}
+.small_title_spe{
+    margin:10px 20px;
+    background-color: rgb(246,248,252);
+    border-width: 0px 0px 0px 2px;
+    padding: 5px;
+    border-color: #667aff;
+    border-style: solid;
+}
+.small_content{
+    width:70%;
+    margin: auto
+}
+.small_content > *{
+    margin:0px 20px;
+}
+.typhoon{
+    text-align: center;
+}
+#typhoon_img{
+    width: 70%;
+}
+.typhoon_info{
+    display: flex;
+    background-color: rgb(246,248,252);
+    padding:20px 10px;
+    justify-content: space-evenly;
+    font-size: 20px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    margin: 10px;
+}
+.typhoon_info div span{
+    margin:0px;
+}
+#pressure, #max_wind{
+    font-size: 30px;
+}
+.weather{
+    text-align: center;
+}
+.weather img{
+    width:50%;
+}
+.warning {
+    margin: 5px 0px 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+.warning_img {
+    width: 40%;
+}
+.issuing_area_box {
+    width: 60%;
+    margin-left: 10px;
+    font-size:20px;
+}
+#now_issuing{
+    width:100%;
+}
+#issuing_warning_title{
+    text-align: left;
+    padding: 0px;
+}
+#issuing_date{
+    font-size: 15px;
+    padding: 0px;
+    border-bottom: 1px solid black;
+}
+.warn_content {
+    max-height: 340px;
+    overflow-y: auto;
+}
+#issuing_area{
+    white-space: pre-wrap;
+    padding: 5px 0px 0px 0px;
+}
+#issuing_warning_title{
+    font-size: 25px;
+}
+#issuing_date{
+    font-size:17px;
+}
+#news_content{
+    width:60%;
+    margin: auto;
+}
+#news_content > *{
+    margin: 5px 0px;
+}
+.news_box{
+    display: flex;
+    margin:10px 0px;
+}
+.news_box:hover{
+    background-color: rgb(246,248,252);
+}
+.news_img{
+    object-fit:contain
+}
+.news_info{
+    height: 50%;
+}
+.news_box > div {
+    margin-left: 10px;
+}
+.author_date{
+    display: flex;
+}
+.author, .news_date{
+    color:rgb(128, 128, 128);
+    font-size:15px;
+}
+.news_date{
+    margin-left: 3px;
+}
+#explain{
+    width:70%;
+    margin: auto;
+    text-align: left;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.link_list li{
+    border-color: gainsboro;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    padding: 5px 0px;
+    margin: 5px 0px;
+}
+.news_box div{
+    margin: 0px;
+}
+.pungsun{
+    width:70%;
+    margin: auto;
+    padding:10px 0px 5px;
+    border-left: 3px solid rgb(172, 172, 172);
+    font-size: 17px;
+}
+#share{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    margin-top:124px;
+    padding-top:10px;
+}
+#share a {
+    width:40px;
+    height: 40px;
+}
+#share a  img{
+    width:100%;
+}
+#share div{
+    width:40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(29,161,242);
+    border-radius: 100%;
+    cursor: pointer;
+}
+#twit{
+    margin:0px 10px;
+}
+#twit_logo{
+    color:white;
+}
+.single_link{
+    margin:30px;
+    padding-left: 10px;
+}
+.single_link svg{
+    margin-top:25px;
+}
+li{
+    list-style: none;
+}
+@media screen and (max-width : 1000px) {
+    body{
+        background-color: white;
+    }
+    #main{
+        background-color: white;
+        width:95%;
+    }
+    .warning{
+        justify-content: center;
+        align-items: center;
+    }
+    .issuing_area_box{
+        width:100%;
+        justify-content: center;
+    }
+    #news_content{
+        width:80%;
+    }
+    .news_box{
+        flex-direction: column;
+    }
+    #bar{
+        width:95%;
+        box-shadow: none;
+        border-bottom: 2px solid rgb(0,0,0,0.12);
+    }
+    #typhoon_img{
+        width:95%;
+    }
+    #explain{
+        margin:10px;
+        width:95%;
+    }
+    .typhoon_info{
+        flex-direction: column;
+    }
+    .weather img{
+        width:95%;
+    }
+    #now_issuing {
+        width: 100%;
+    }
+    .warning_img{
+        width:95%;
+    }
+    .news_box > div {
+        margin-left: 0px;
+    }
+    .news_box > div > h4 {
+        margin: 0px;
+    }
+    .author{
+        margin: 0px;
+    }
+    #menu a {
+        margin-right: 20px;
+    }
+    .author_date {
+        display: flex;
+        flex-direction: column;
+        border-top:1px rgb(128, 128, 128) solid;
+        margin-top:2px;
+        padding-top:2px;
+    }
+    .news_date{
+        margin: 0px;
+    }
+}
+@media screen and (max-width : 800px) {
+    .warning{
+        flex-direction: column;
+        margin: auto;
+    }
+    p{
+        font-size:17px;
+    }
+}
+

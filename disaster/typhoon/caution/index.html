@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <title>최신 태풍 정보</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js" integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="main">
+        <nav class='header' id="bar">
+            <h1 id="title">6호 태풍 카눈, 최신 정보와 주의점</h1>
+            <div id="tab">
+                <a href="../index.html">최신정보</a>
+                <a href="#" id="selected">대피 시 주의점</a>
+                <a href="../getdamaged/index.html">피해를 입으면</a>
+            </div>
+            <div id="menu">
+                <a class='shortcut-link' data-target="eva-check" href="#">#위험도 확인</a>
+                <a class='shortcut-link' data-target="caution" href="#">#대피 할 때의 주의점</a>
+                <a class='shortcut-link' data-target="in_shelter" href="#">#대피소에서의 주의점</a>
+            </div>
+        </nav>
+        <div id="content">
+            <div id="share">
+            <a id="kakaotalk-sharing-btn" href="javascript:;">
+                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" />
+            </a>
+            <div id='twit'>
+                <svg id='twit_logo' height="77.5%" width="77.5%" class="riff-text-inverted" fill="currentColor" focusable="false" viewBox="0 0 48 48" aria-hidden="true"><path clip-rule="evenodd" d="M42 12.835a14.8 14.8 0 0 1-4.242 1.163 7.403 7.403 0 0 0 3.247-4.086 14.775 14.775 0 0 1-4.69 1.792 7.377 7.377 0 0 0-5.391-2.332 7.386 7.386 0 0 0-7.386 7.385c0 .58.066 1.143.191 1.683-6.138-.307-11.58-3.248-15.223-7.716a7.355 7.355 0 0 0-1 3.713 7.384 7.384 0 0 0 3.286 6.148 7.362 7.362 0 0 1-3.345-.924l-.001.092a7.391 7.391 0 0 0 5.925 7.243 7.393 7.393 0 0 1-3.336.126 7.394 7.394 0 0 0 6.9 5.13 14.826 14.826 0 0 1-9.173 3.161c-.596 0-1.184-.035-1.762-.103a20.903 20.903 0 0 0 11.322 3.318c13.585 0 21.014-11.254 21.014-21.014 0-.32-.007-.639-.022-.956A14.988 14.988 0 0 0 42 12.835Z" fill-rule="evenodd"></path></svg>
+            </div>
+        </div>
+            <div class="block">
+                <h2 id="eva-check">우선 현재 위험도를 확인!</h2>
+                <div style="text-align: center;">
+                    <img src="../resource/eva-check.png" style="width: 80%;">
+                </div>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="https://www.forest.go.kr/kfsweb/kfi/kfs/trail/sanSaTae.do?pblicDataId=PBD0000210&tabs=4&mn=NKFS_06_08_02&subTitle=%EC%82%B0%EC%82%AC%ED%83%9C%EC%9C%84%ED%97%98%EC%A7%80%EB%8F%84" target="_blank">산사태 위험지도 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                        </li>
+                        <li>
+                            <a href="https://floodmap.go.kr/fldara/fldaraList.do" target="_blank">홍수 위험지도 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                        </li>
+                    </ul>
+                </div>
+                <h3 class="small_title">토사재해의 전조 현상에 주의</h3>
+                <div style="text-align: center;">
+                    <img src="../resource/landslide.png" style="width: 80%;">
+                </div>
+            </div>
+            <div class="block"> 
+                <h2 id="caution">대피 할 때의 주의점</h2>
+                <h3 class="small_title">대피소로 가는 것만이 대피가 아님</h3>
+                <div class="pungsun">
+                    <p>"대피"는 지정된 대피소로 가는 것이라고만은 할 수 없습니다.</p>
+                    <p>위험하다고 판단한 경우에는 무리하게 대피소로 이동하지 말고 근처의 콘크리트로 지어진 튼튼한 건물의 높은 층(경사면과 반대편)이나 산으로부터 떨어진 조금 높은 장소 등으로 피난해도 괜찮습니다.</p>
+                    <p>이미 밖으로 나가는 것이 불가능한 경우에는, 대피하지 말고 자택에서 가능한 높은 층의 경사면으로부터 반대쪽으로 대피하는 "수직피난"을 합시다.</p>
+                </div>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/eva-caution.png" style="width: 80%;">
+                    <img src="../resource/eva-water.png" style="width: 80%;">
+                </div>
+                <h3 class="small_title">차에서 재해를 만나면</h3>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/eva-car.png" style="width: 80%;">
+                </div>
+                <a class='single_link' href="https://www.hoyadb.com/prepare/cityflood/atcar.html#fifth" target="_blank">차가 침수되었을 때의 탈출법 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+            </div>
+            <div class="block"> 
+                <h2 id="in_shelter">대피소에서의 주의점</h2>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/shelter-tips.png" style="width: 80%;">
+                </div>
+                <h3 class="small_title">열사병에 주의</h3>
+                <div class="pungsun">
+                    <p>여름철 대피소에서는 열사병에 주의(특히 어린이나 노인).</p>
+                    <p>갈증을 느끼지 않아도 수시로 수분과 염분을 보충하고 통기성이 좋은 옷을 착용하여 더위를 피합시다.</p>
+                </div>
+                <a class='single_link' href="https://www.hoyadb.com/prepare/cityflood/atcar.html#fifth" target="_blank">열사병에 걸렸을 때의 처치 방법   <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                <h3 class="small_title">이코노미클래스 증후군에 주의</h3>
+                <p style="width:70%; margin: auto;">대피생활에서 식사나 수분을 충분히 섭취하지 않은 상태에서 좁은 장소에 장시간 앉아 있다가 다리를 움직이지 않으면 혈액순환 불량이 발생하고 혈액이 굳어지기 쉬워 이코노미 클래스 증후군에 걸릴 위험이 있으므로 주의합니다.</p>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/economiclass.png" style="width: 80%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../src/main.js"></script>
+</body>
+</html>

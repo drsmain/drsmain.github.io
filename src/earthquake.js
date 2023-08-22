@@ -253,9 +253,9 @@ xhr.onreadystatechange = function () {
                         var epi_marker = L.marker([earthquakes[i].lat, earthquakes[i].lon], { icon: epicenter }).addTo(map);
                         var customIcon = L.divIcon({
                             className: 'custom-icon',
-                            html: `<div class="text-label" style="width:200px">${earthquakes[i].loc}</div>`
+                            html: `<div class="text-label" style="width:300px">${earthquakes[i].loc}</div>`
                         });
-                        L.marker([earthquakes[i].lat, earthquakes[i].lon + 0.02], { icon: customIcon }).addTo(map);
+                        L.marker([earthquakes[i].lat, earthquakes[i].lon], { icon: customIcon }).addTo(map);
                         const divElement = document.createElement('div');
                         divElement.className = 'earthquake_info';
 

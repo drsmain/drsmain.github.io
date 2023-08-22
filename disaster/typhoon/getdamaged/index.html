@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <title>최신 태풍 정보</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js" integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="main">
+        <nav class='header' id="bar">
+            <h1 id="title">6호 태풍 카눈, 최신 정보와 주의점</h1>
+            <div id="tab">
+                <a href="../index.html">최신정보</a>
+                <a href="../caution/index.html">대피 시 주의점</a>
+                <a href="#" id="selected">피해를 입으면</a>
+            </div>
+            <div id="menu">
+                <a class='shortcut-link' data-target="water_damage" href="#water_damage">#수해를 입으면</a>
+                <a class='shortcut-link' data-target="car_damage" href="#car_damage">#자동차 피해</a>
+                <a class='shortcut-link' data-target="blackout" href="#blackout">#정전 시 대책</a>
+                <a class='shortcut-link' data-target="hot" href="#hot">#열사병 대책</a>
+                <a class='shortcut-link' data-target="no_water" href="#no_water">#단수 대책</a>
+                <a class='shortcut-link' data-target="report" href="#report">#사유재산피해신고</a>
+            </div>
+        </nav>
+        <div id="content">
+            <div id="share">
+                <a id="kakaotalk-sharing-btn" href="javascript:;">
+                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" />
+                </a>
+                <div id='twit'>
+                    <svg id='twit_logo' height="77.5%" width="77.5%" class="riff-text-inverted" fill="currentColor" focusable="false" viewBox="0 0 48 48" aria-hidden="true"><path clip-rule="evenodd" d="M42 12.835a14.8 14.8 0 0 1-4.242 1.163 7.403 7.403 0 0 0 3.247-4.086 14.775 14.775 0 0 1-4.69 1.792 7.377 7.377 0 0 0-5.391-2.332 7.386 7.386 0 0 0-7.386 7.385c0 .58.066 1.143.191 1.683-6.138-.307-11.58-3.248-15.223-7.716a7.355 7.355 0 0 0-1 3.713 7.384 7.384 0 0 0 3.286 6.148 7.362 7.362 0 0 1-3.345-.924l-.001.092a7.391 7.391 0 0 0 5.925 7.243 7.393 7.393 0 0 1-3.336.126 7.394 7.394 0 0 0 6.9 5.13 14.826 14.826 0 0 1-9.173 3.161c-.596 0-1.184-.035-1.762-.103a20.903 20.903 0 0 0 11.322 3.318c13.585 0 21.014-11.254 21.014-21.014 0-.32-.007-.639-.022-.956A14.988 14.988 0 0 0 42 12.835Z" fill-rule="evenodd"></path></svg>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="water_damage">수해를 입으면</h2>
+                <p style="width:70%; margin: auto;">대피 정보가 나와 있는 상황에서는 안전한 장소에 머물러 주세요. 피해를 입은 집의 정리와 기록 등은 위험이 사라지고 안전이 확보된 후 실시해 주세요.</p>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/water-point.png" style="width: 80%;">
+                </div>
+                <h3 class="small_title">정리 할 때의 위생대책과 소독</h3>
+                <p style="width:70%; margin: auto;">수해에서는 집에 하수도 같은 오수가 흘러들어가  세균이나 곰팡이로 인한 감염병이 발생할 위험성도 있습니다. 재해 후에 조심해야 할 것을 확인합시다.</p>
+                <div class="pungsun">
+                    <p>여름철 대피소에서는 열사병에 주의(특히 어린이나 노인).</p>
+                    <p>갈증을 느끼지 않아도 수시로 수분과 염분을 보충하고 통기성이 좋은 옷을 착용하여 더위를 피합시다.</p>
+                </div>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/shinsui.png" style="width: 80%;">
+                </div>
+                <a class='single_link' href="https://www.hoyadb.com/prepare/cityflood/prevent-disease.html" target="_blank">수해 후 감염 예방 
+                    <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                        <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="block">
+                <h2 id="car_damage">자동차 피해</h2>
+                <h3 class="small_title">침수 피해를 입은 자동차의 대처 방법</h3>
+                <p style="width:70%; margin: auto;">물에 잠긴 차량은 외관상 문제가 없어 보여도 감전 사고와 합선 등에 의한 차량 화재가 발생할 우려가 있습니다.</p>
+                <div class="pungsun">
+                    <p>1. 시동 걸지 않기.</p>
+                    <p>2. 사용해야 하는 경우에는 구입한 판매점, 또는 가까운 정비소에서 상담하기. 특히 하이브리드차(HV)나 전기차(EV)는 고전압 배터리가 탑재되어 있으니 절대 함부로 만지지 마세요.</p>
+                    <p>3. 또한, 배터리가 발화할 우려가 있으므로 자동차 배터리의 -(마이너스) 쪽의 터미널을 분리하세요.</p>
+                </div>
+                <a class='single_link' href="https://www.hoyadb.com/prepare/cityflood/atcar.html" target="_blank">차에서 재해를 당하면 
+                    <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                        <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="block">
+                <h2 id="blackout">정전 시 대책</h2>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/blackout-caution.png" style="width: 80%;">
+                </div>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="https://www.hoyadb.com/prepare/electricitygas/prepare-blackout.html" target="_blank">정전 대비 및 대책 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                        </li>
+                        <li>
+                            <a href="https://www.hoyadb.com/prepare/electricitygas/phone.html" target="_blank">재해 시 핸드폰 배터리 절약 기술 및 핸드폰 사용법 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                        </li>
+                        <li>
+                            <a href="https://www.hoyadb.com/prepare/electricitygas/earthquakefire.html#fir" target="_blank">통전 화재에 주의 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="hot">열사병 대책</h2>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/hot_aid.png" style="width: 80%;">
+                    <img src="../resource/hot_aid_2.png" style="width: 80%;">
+                </div>
+                <div class="pungsun">
+                    <p>정전으로 에어컨이나 선풍기를 사용할 수 없는 상황에서는 열사병에 주의합시다. 가능한 통풍이 잘 되는 그늘에서 지내고 수시로 수분을 보충해 주시기 바랍니다. 경구 수분 보충액 등도 상비해 두는 것이 좋습니다. 특히 고령자 등은 열사병에 주의하시기 바랍니다.</p>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="no_water">단수 대책</h2>
+                <div style="text-align: center; margin-top:20px">
+                    <img src="../resource/get_water.png" style="width: 80%;">
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="report">사유재산피해신고</h2>
+                <div class="pungsun">
+                    <p>국민재난안전포털에서 '사유재산피해신고'를 통해 자연재해로 인한 피해를 보상 받을 수 있습니다.</p>
+                </div>
+                <a class='single_link' href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/pan/cdr/cdreaiBefore.jsp?menuSeq=157" target="_blank">사유재산피해신고 <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48"><path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path></svg></a>
+            </div>
+        </div>
+    </div>
+    <script src="../../src/main.js"></script>
+</body>
+</html>

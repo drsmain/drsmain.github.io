@@ -10,6 +10,7 @@ body {
     padding: 0px;
     font-family: 'NanumSquare';
     overflow-y: hidden;
+    word-break: keep-all;
 }
 
 h1,

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>최신 태풍 정보</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js" integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="main">
+        <nav class='header' id="bar">
+            <h1 id="title">6호 태풍 카눈, 최신 정보와 주의점</h1>
+            <div id="tab">
+                <a href="#" id="selected">최신정보</a>
+                <a href="./caution/index.html">대피 시 주의점</a>
+                <a href="./getdamaged/index.html">피해를 입으면</a>
+            </div>
+            <div id="menu">
+                <a class='shortcut-link' data-target="news" href="#">#최신 뉴스</a>
+                <a class='shortcut-link' data-target="weather_info" href="#">#기상정보</a>
+                <a class='shortcut-link' data-target="traffic" href="#">#교통 정보</a>
+                <a class='shortcut-link' data-target="lifeline" href="#">#라이프라인 정보</a>
+                <a class='shortcut-link' data-target="areyouok" href="#">#안부 확인</a>
+            </div>
+        </nav>
+        <div id="content">
+            <div id="share">
+                <a id="kakaotalk-sharing-btn" href="javascript:;">
+                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" />
+                </a>
+                <div id='twit'>
+                    <svg id='twit_logo' height="77.5%" width="77.5%" class="riff-text-inverted" fill="currentColor" focusable="false" viewBox="0 0 48 48" aria-hidden="true"><path clip-rule="evenodd" d="M42 12.835a14.8 14.8 0 0 1-4.242 1.163 7.403 7.403 0 0 0 3.247-4.086 14.775 14.775 0 0 1-4.69 1.792 7.377 7.377 0 0 0-5.391-2.332 7.386 7.386 0 0 0-7.386 7.385c0 .58.066 1.143.191 1.683-6.138-.307-11.58-3.248-15.223-7.716a7.355 7.355 0 0 0-1 3.713 7.384 7.384 0 0 0 3.286 6.148 7.362 7.362 0 0 1-3.345-.924l-.001.092a7.391 7.391 0 0 0 5.925 7.243 7.393 7.393 0 0 1-3.336.126 7.394 7.394 0 0 0 6.9 5.13 14.826 14.826 0 0 1-9.173 3.161c-.596 0-1.184-.035-1.762-.103a20.903 20.903 0 0 0 11.322 3.318c13.585 0 21.014-11.254 21.014-21.014 0-.32-.007-.639-.022-.956A14.988 14.988 0 0 0 42 12.835Z" fill-rule="evenodd"></path></svg>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="news">최신 뉴스</h2>
+                <div id="news_content"></div>
+                <a class='single_link' href="https://search.naver.com/search.naver?where=news&query=%EC%B9%B4%EB%88%88" target="_blank">최신 뉴스는 여기로 
+                    <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                        <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="block">
+                <h2 id="weather_info">기상정보</h2>
+                <h3 class="small_title">태풍 현황 및 예상 진로</h3>
+                <div class="typhoon">
+                    <img src="" alt="기상청 태풍정보" id="typhoon_img">
+                    <p id="explain"></p>
+                    <div class="typhoon_info">
+                        <div><span>중심기압: </span><span id="pressure"></span><span>hPa</span></div>
+                        <div><span>최대풍속: </span><span id="max_wind"></span><span>m/s</span></div>
+                    </div>
+                </div>
+                <a class='single_link' href="https://www.hoyadb.com/disaster/typhooninfo" target="_blank">자세한 태풍정보는 여기로 
+                    <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                        <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <div class="weather">
+                    <img src="../../ifs_atri_108_202308091800_3.png">
+                    <p>예상 누적 강우량(00월 00일 00시~00월 00일 00시)</p>
+                </div>
+                <h3 class="small_title">비구름 레이더</h3>
+                <div class="weather">
+                    <img src="https://apihub.kma.go.kr/api/typ03/cgi/rdr/nph-rdr_cmp1_img?&cmp=HSP&qcd=HSLP&obs=ECHD&color=C4&aws=0&map=D2&grid=2&legend=1&size=500&itv=5&authKey=QXWrcwZnSx61q3MGZ0sejQ">
+                </div>
+                <h3 class="small_title">일 강수량</h3>
+                <div class="weather">
+                    <img src="https://apihub.kma.go.kr/api/typ03/cgi/aws3/nph-aws_min_img1?obs=rn_day&val=1&stn=1&obj=mq&map=D2&grid=2&legend=1&size=600&itv=5&zoom_level=1&zoom_x=0000000&zoom_y=0000000&gov=&_DT=RSW:RNEX&authKey=QXWrcwZnSx61q3MGZ0sejQ">
+                </div>
+                <h3 class="small_title">전국의 방재 정보</h3>
+                <div class="warning">
+                    <div class="warning_img">
+                        <img class="weather_warning_img" id="now_issuing" src="" alt="현재 발효중인 기상특보입니다.">
+                    </div>
+                    <div class="issuing_area_box">
+                        <h4 id="issuing_warning_title">기상특보 발효현황</h4>
+                        <p id="issuing_date"></p>
+                        <div class="warn_content">
+                            <p id="issuing_area"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="https://www.hoyadb.com/disaster/weatherwarning" target="_blank">기상특보 상세보기 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://sansatai.forest.go.kr/gis/main.do#mhms0" target="_blank">산사태 예보 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="traffic">교통 정보</h2>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="http://www.roadplus.co.kr/main/main.do" target="_blank">고속도로 교통정보 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.airportal.go.kr/life/airinfo/RbHanFrmMain.jsp" target="_blank">항공기 실시간 운항정보 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://topis.seoul.go.kr/" target="_blank">TOPIS 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="lifeline">라이프라인 정보</h2>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/acd/iflccwUserList.jsp?menuSeq=99" target="_blank">정전 정보 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="block">
+                <h2 id="areyouok">안부 확인</h2>
+                <div class="link_list">
+                    <ul>
+                        <li>
+                            <a href="https://google.org/personfinder/test" target="_blank">Google Person Finder 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/crisisresponse/" target="_blank">Facebook 재난 안전 확인 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://drsmain.github.io" target="_blank">재해 보고 시스템 
+                                <svg height="1.125rem" width="1.125rem" class="LinkItem_pc_navigation__QMBli riff-flex-shrink-0 riff-ml-2 riff-text-tertiary" fill="currentColor" focusable="false" viewBox="0 0 48 48">
+                                    <path clip-rule="evenodd" d="M33.421 22.581 17.414 6.584a2.008 2.008 0 0 0-2.83 0 2.006 2.006 0 0 0 0 2.828L29.179 24 14.584 38.587a2.007 2.007 0 0 0 0 2.83 2.01 2.01 0 0 0 2.83 0L33.421 25.42c.39-.39.584-.905.583-1.42a1.993 1.993 0 0 0-.583-1.418Z" fill-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../src/main.js"></script>
+    <script src="../src/typhoon.js"></script>
+    <script src="../src/typsearch.js"></script>
+</body>
+
+</html>
