@@ -105,7 +105,7 @@ xmlhttp.onreadystatechange = function () {
         // console.log(myObj)
         var data
         for(var i =0; i < myObj.length; i++){
-            if(myObj[i].typSeq == 7){
+            if(myObj[i].typSeq == 9){
                 data = myObj[i]
                 break;
             }

@@ -2,7 +2,7 @@ var data;
 $.ajax({
     method: "GET",
     url: "https://dapi.kakao.com/v2/search/vclip",
-    data: { query: "카눈", sort: "play_count" },
+    data: { query: "사올라", sort: "play_count" },
     headers: { Authorization: 'KakaoAK dafddc4c6dac9924f6ceb7eb6a41edd9' }
 })
     .done(function (msg) {
