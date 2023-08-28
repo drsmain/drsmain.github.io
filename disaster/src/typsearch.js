@@ -12,7 +12,7 @@ $.ajax({
         for (var i = 0; i < data.length; i++) {
 
             var currentData = data[i];
-            if (currentData.author == '소박사TV') {
+            if (currentData.author == '소박사TV' || currentData.author == ' YTN' || currentData.author == 'YTN 디지털뉴스팀') {
                 // console.log(currentData);
             } else {
                 const container = document.getElementById('news_content');
